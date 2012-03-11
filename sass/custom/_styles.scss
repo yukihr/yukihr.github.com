@@ -1,45 +1,45 @@
 // This File is imported last, and will override other styles in the cascade
 // Add styles here to make changes without digging in too much
 
-html {
-    background-image: none;
-    background-color: #E9E9E9;
-}
+// html {
+//     background-image: none;
+//     background-color: #E9E9E9;
+// }
 
-body {
-     header[role="banner"] {
-         background-color: rgb(0,189,240);
-     }
-     nav, footer {
-         border: none;
-         background-image: none;
-     }
+// body {
+//      header[role="banner"] {
+//          background-color: rgb(0,189,240);
+//      }
+//      nav, footer {
+//          border: none;
+//          background-image: none;
+//      }
 
-     nav {
-         background-color: #272727;
-         li + li {
-            border: none;
-            a {
-              border: none;
-            }
-         }
-         a {
-           text-shadow: none;
-         }
-         a:hover {
-           color: #999;
-         }
-         form .search {
-           border-radius: 0.2em;
-         }
-     }
+//      nav {
+//          background-color: #272727;
+//          li + li {
+//             border: none;
+//             a {
+//               border: none;
+//             }
+//          }
+//          a {
+//            text-shadow: none;
+//          }
+//          a:hover {
+//            color: #999;
+//          }
+//          form .search {
+//            border-radius: 0.2em;
+//          }
+//      }
 
-     footer {
-         text-align: center;
-     }
+//      footer {
+//          text-align: center;
+//      }
 
-     div {
-         border: none;
-     }
-}
+//      div {
+//          border: none;
+//      }
+// }
 
