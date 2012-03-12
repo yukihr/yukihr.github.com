@@ -97,7 +97,7 @@ body {
   }
   > #main {
     max-width: $main-max-width;
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: $main-bg;
   }
 }
 

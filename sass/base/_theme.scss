@@ -8,7 +8,7 @@ $link-color-visited: adjust-color($link-color, $hue: 80, $lightness: -4) !defaul
 $link-color-active: adjust-color($link-color-hover, $lightness: -15) !default;
 
 // Main Section Colors
-$main-bg: #f8f8f8 !default;
+$main-bg: rgba(255, 255, 255, 0.5) !default;
 $page-bg: #252525 !default;
 $article-border: #eeeeee !default;
 
@@ -20,6 +20,11 @@ $subtitle-color: #aaa !default;
 $text-color: #333 !default;
 $text-color-light: #bbb !default;
 $type-border: #ddd !default;
+
+.shadow-border {
+  border-bottom: 1px solid desaturate(darken($main-bg, 7), 10);
+  @include box-shadow(lighten($main-bg, 5) 0 1px);
+}
 
 /* Navigation */
 $nav-bg: #CCC !default;
@@ -44,13 +49,13 @@ $nav-border-right: none !default;
 
 /* Sidebar colors */
 //$sidebar-bg: #f2f2f2 !default;
-$sidebar-bg: #FFF !default;
+$sidebar-bg: $main-bg !default;
 $sidebar-link-color: $link-color !default;
 $sidebar-link-color-hover: $link-color-hover !default;
 $sidebar-link-color-active: $link-color-active !default;
 $sidebar-color: change-color(mix($text-color, $sidebar-bg, 80), $hue: hue($sidebar-bg), $saturation: saturation($sidebar-bg)/2) !default;
-//$sidebar-border: desaturate(darken($sidebar-bg, 7), 10) !default;
-$sidebar-border: $sidebar-bg !default;
+$sidebar-border: desaturate(darken($sidebar-bg, 7), 10) !default;
+//$sidebar-border: $sidebar-bg !default;
 //$sidebar-border-hover: darken($sidebar-bg, 7) !default;
 $sidebar-border-hover: $sidebar-bg !default;
 $sidebar-link-color-subdued: lighten($sidebar-color, 20) !default;

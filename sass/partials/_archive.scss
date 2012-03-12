@@ -5,7 +5,8 @@
   article {
     padding: 1em 0 1em;
     position: relative;
-    background: $img-border bottom left repeat-x;
+    //background: $img-border bottom left repeat-x;
+    @extend .shadow-border;
     &:last-child {
       background: none;
     }

@@ -6,7 +6,8 @@ article {
     padding-top: 2em;
     padding-bottom: 1em;
     margin-bottom: 1em;
-    background: $img-border bottom left repeat-x;
+    //background: $img-border bottom left repeat-x;
+    //@extend .shadow-border;
     h1 {
       margin: 0;
       a { text-decoration: none;
@@ -25,12 +26,13 @@ article {
     @media only screen and (min-width: 768px) {
       margin-bottom: 1.5em;
       padding-bottom: 1em;
-      background: $img-border bottom left repeat-x;
+      //background: $img-border bottom left repeat-x;
     }
   }
   h2 {
     padding-top: 0.8em;
-    background: $img-border top left repeat-x;
+    //background: $img-border top left repeat-x;
+    //@extend .shadow-border;
   }
   .entry-content & h2:first-child, header + h2 { padding-top: 0; }
   h2:first-child, header + h2 { background: none; }
@@ -38,7 +40,8 @@ article {
     padding-top: .5em;
     margin-bottom: 1em;
     padding-bottom: 1em;
-    background: $img-border bottom left repeat-x;
+    //background: $img-border bottom left repeat-x;
+    //@extend .shadow-border;
     font-size: 2.0em; font-style: italic;
     line-height: 1.3em;
   }
@@ -84,9 +87,10 @@ article {
   }
 
 }
-article + article {
+article {
   .blog-index & {
-    background: $img-border top left repeat-x;
+    //background: $img-border top left repeat-x;
+    @extend .shadow-border;
   }
 }
 #content .blog-index {
@@ -128,7 +132,8 @@ article + article {
   text-align: center;
   font-size: .95em;
   position: relative;
-  background: $img-border top left repeat-x;
+  //background: $img-border top left repeat-x;
+  //@extend .shadow-border;
   padding: {top: 1.5em; bottom: 1.5em;}
   a {
     text-decoration: none;
