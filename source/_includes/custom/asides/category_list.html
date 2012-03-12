@@ -1,0 +1,7 @@
+<section>
+  <h1>Categories</h1>
+    <ul id="category-list">{% category_list counter:true %}</ul>
+    {% for key in site.category_keys %}
+      <p>{{ key }}</p>
+    {% endfor %}
+</section>
