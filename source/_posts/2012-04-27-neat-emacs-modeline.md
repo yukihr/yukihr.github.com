@@ -25,7 +25,7 @@ Emacs のモードラインをいい感じにしました。こんな感じ。
 
 こちらのサイト様を参考にさせていただきました m(\_ \_)m
 
-[Emacs: custom mode line - From Amit’s Thoughts](http://gyazo.com/10a018d801b27d35255a8c23ffd92afc.png?1335456201)
+[Emacs: custom mode line - From Amit’s Thoughts](http://amitp.blogspot.jp/2011/08/emacs-custom-mode-line.html)
 
 このサイトの設定の何がいいかというと、それは
 
