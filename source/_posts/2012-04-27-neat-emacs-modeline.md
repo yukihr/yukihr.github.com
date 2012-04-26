@@ -8,11 +8,11 @@ categories: Emacs
 
 Emacs のモードラインをいい感じにしました。こんな感じ。
 
-![新しいモードライン](http://gyazo.com/10a018d801b27d35255a8c23ffd92afc.png?1335456201)
+![新しいモードライン](/images/emacs_modeline_after.png)
 
 ちなみにいい感じにする前のモードラインはこんな感じです。
 
-![前のモードライン](http://gyazo.com/56e9e01b7af4186afcda2df5fdaf568d.png?1335458531)
+![前のモードライン](/images/emacs_modeline_before.png)
 
 標準のモードラインが良くないってわけじゃないんですけど、3Dのごつごつし
 た感じとか暗号の羅列のようなUIはもうちょっと何とかならないんかなーと思っ
@@ -23,7 +23,7 @@ Emacs のモードラインをいい感じにしました。こんな感じ。
 ググッていたらよさそうなカスタマイズをハケーンして、それを参考（という
 かほとんどコピぺ）させてもらったという次第です。
 
-こちらのサイト様を参考にさせていただきました m(_ _)m
+こちらのサイト様を参考にさせていただきました m(\_ \_)m
 
 [Emacs: custom mode line - From Amit’s Thoughts](http://gyazo.com/10a018d801b27d35255a8c23ffd92afc.png?1335456201)
 
