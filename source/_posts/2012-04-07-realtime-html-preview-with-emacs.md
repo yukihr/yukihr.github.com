@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Warp - EmacsでリアルタイムにHTMLやmarkdownをプレビュー"
+title: "Warp - EmacsからリアルタイムにHTMLやmarkdownをブラウザプレビュー"
 date: 2012-04-07 14:26
 comments: true
 categories: Emacs
@@ -27,6 +27,8 @@ evilを使ってviキーバインドを使っているような<del>変態</del>
 まあ、オートリロード用のマイナーモードも書いてるんですがこちらのほうが
 需要がありそうだったので。
 
+今のところ、Emacs23.3 と Chrome の最新版で動作を確認してます。
+
 ## インストール
 
 ウェブソケットを通してクライアント（ウェブページ）に命令を送るんですが、
@@ -45,8 +47,9 @@ Node.js がインストールできたらWarpのリポジトリをローカル�
     $ git clone https://github.com/yukihr/Warp.git 
 
 ローカルにファイルを置いたら、npmモジュールであるところのwebsocketをイ
-ンストール。package.jsonにインストール設定があるので、以下のようにしま
-す。
+ンストール。[npm](http://npmjs.org/) が必要なのでインストールしておいて
+ください。npmがインストールできたら、package.jsonにインストール設定があ
+るので、以下のようにします。
 
     $ cd warp
     $ npm install
