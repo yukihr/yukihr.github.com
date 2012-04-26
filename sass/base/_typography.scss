@@ -1,5 +1,5 @@
 $blockquote: $type-border !default;
-$sans: Arial, "Helvetica Neue", sans-serif !default;
+$sans: Arial, sans-serif !default;
 $serif: Georgia, "Times New Roman", Times, serif !default;
 $times: "Times New Roman", Times, serif !default;
 $mono: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace !default;
@@ -29,10 +29,11 @@ body > header h2 {
   font-family: $header-subtitle-font-family;
 }
 
+
 body {
   line-height: 1.5em;
   color: $text-color;
-  @extend .serif;
+  @extend .sans;
 }
 h1 {
   font-size: 1.5em;
