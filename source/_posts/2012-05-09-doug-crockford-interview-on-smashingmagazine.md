@@ -3,7 +3,7 @@ layout: post
 title: "Smashing Magazine に Douglas Crockford 氏のインタビュー"
 date: 2012-05-09 20:26
 comments: true
-categories: JavaScript
+categories: [JavaScript, Articles]
 ---
 Web 開発に有益な情報を提供してくれる[Smashing Magazine](http://www.smashingmagazine.com/)に、米Yahoo!開発者のDouglas Crockford氏のインタビューが載っています。
 
