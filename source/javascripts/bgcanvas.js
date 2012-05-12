@@ -4,7 +4,7 @@ function draw() {
   var ctx = canvas.getContext('2d');
   
   var img = new Image();
-  img.src = "/images/header.jpg?20120311";
+  img.src = "/images/header_may.jpg?20120311";
   img.onload = function() {
     canvas.setAttribute('width', this.width);
     canvas.setAttribute('height', this.height);
@@ -12,9 +12,9 @@ function draw() {
 
     // Gradients
     var points = [
-      [0, 200, 0, this.height]
+      [0, 300, 0, this.height]
       , [300, 0, 0, 0]
-      , [this.width - 200, 0, this.width, 0]
+      , [this.width - 300, 0, this.width, 0]
     ];
     
     for(var i=0, len=points.length; i<len; i++) {
@@ -28,7 +28,10 @@ function draw() {
     // Set Position
     function setupPosition(windowSize) {
       $(canvas).css('left',
-                    - (img.width - windowSize.width) / 2
+                    - (img.width - windowSize.width) / 2 + 70
+                   );
+      $(canvas).css('top',
+                    -50
                    );
     }
     function getWindowSize() {
