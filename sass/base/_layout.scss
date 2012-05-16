@@ -85,10 +85,9 @@ body {
     }
   }
   > #bgcanvas {
-    position: fixed;
+    position: absolute;
     overflow: hidden;
     z-index: -1;
-    float: right;
   }
   > header {
     font-size: $header-font-size;
