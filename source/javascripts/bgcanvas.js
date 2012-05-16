@@ -26,30 +26,31 @@ function draw() {
     }
 
     // Set Position
-    function setupPosition(windowSize) {
+    function setupPosition(windowStat) {
       $(canvas).css('left',
-                    - (img.width - windowSize.width) / 2 + 70
+                    - (img.width - windowStat.width) / 2 + 70
                    );
       $(canvas).css('top',
-                    -50
+                    -50 - (windowStat.scrollY / $(document).height() * img.height * 20)
                    );
     }
-    function getWindowSize() {
+    function getWindowStat() {
       return {
         width: $(window).width()
         , height: $(window).height()
+        , scrollY: window.scrollY || document.documentElement.scrollTop
       };
     }
-    var _windowSize = getWindowSize();
-    setupPosition(_windowSize);
+    var _windowStat = getWindowStat();
+    setupPosition(_windowStat);
     setInterval(function() {
-      var __windowSize = getWindowSize();
-      if(_windowSize.width !== __windowSize.width
-         /* || _windowSize.height !== __windowSize.height */) {
-        _windowSize = __windowSize;
-        setupPosition(_windowSize);
+      var __windowStat = getWindowStat();
+      if(_windowStat.width !== __windowStat.width
+         || _windowStat.scrollY !== __windowStat.scrollY) {
+        _windowStat = __windowStat;
+        setupPosition(_windowStat);
       }
-    }, 100);
+    }, 60);
   };
 }
 $.domReady(function() {

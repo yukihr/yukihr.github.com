@@ -85,7 +85,8 @@ body {
     }
   }
   > #bgcanvas {
-    position: absolute;
+    position: fixed;
+    float: right;
     overflow: hidden;
     z-index: -1;
   }
