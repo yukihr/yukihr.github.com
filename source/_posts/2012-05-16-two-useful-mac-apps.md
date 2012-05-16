@@ -11,7 +11,7 @@ categories: [Mac, App]
 
 [Mac App Store - Window Magnet](http://itunes.apple.com/jp/app/window-magnet/id441258766?l=en&mt=12)
 
-![Window Magnet](images/window-magnet.png)
+![Window Magnet](/images/window-magnet.png)
 
 Windows7のウィンドウは画面の端に持って行くと自動的にサイズを調整してくれるんですが、これがかなり便利でMacにも同じような機能があったらなー、と思ってたんですが、探すといくつか同様の機能を持ったアプリがありました。
 そのなかでも一番使い心地の良かったのがこのWindowMagnetです。
@@ -24,7 +24,7 @@ Windows7のウィンドウは画面の端に持って行くと自動的にサイ
 
 [Mac App Store - Flycut](http://itunes.apple.com/jp/app/flycut-clipboard-manager/id442160987?l=en&mt=12)
 
-![Flycut](images/flycut.png)
+![Flycut](/images/flycut.png)
 
 シンプルなクリップボードマネージャです。
 コピーしたテキストの履歴にメニューバーアイコンからアクセスできます。
