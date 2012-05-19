@@ -1,5 +1,5 @@
-$max-width: 1024px !default;
-$main-max-width: 850px !default;
+$max-width: 1050px !default;
+$main-max-width: 875px !default;
 
 // Padding used for layout margins
 $pad-min: 18px !default;
@@ -102,7 +102,7 @@ body {
 }
 
 #content {
-  max-width: 600px;
+  max-width: 650px;
   > div, > article {
     width: 100%;
   }
