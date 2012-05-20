@@ -43,28 +43,34 @@ Node.js がインストールできたらWarpのリポジトリをローカル�
 す。ファイルをダウンロードして展開でもよいです。以下、/path/to/.. は実
 際のものに置き換えてください。
 
-    $ cd /path/to/your/repos
-    $ git clone https://github.com/yukihr/Warp.git 
+{% codeblock %}
+$ cd /path/to/your/repos
+$ git clone https://github.com/yukihr/Warp.git 
+{% endcodeblock %}
 
 ローカルにファイルを置いたら、npmモジュールであるところのwebsocketをイ
 ンストール。[npm](http://npmjs.org/) が必要なのでインストールしておいて
 ください。npmがインストールできたら、package.jsonにインストール設定があ
 るので、以下のようにします。
 
-    $ cd warp
-    $ npm install
+{% codeblock %}
+$ cd warp
+$ npm install
+{% endcodeblock %}
 
 ~/.emacs.d/init.el などの設定ファイルには以下のように書いておきます。
 
-    (add-to-list 'load-path "/path/to/warp-directory")
-    (require 'warp)
-    ;; キーバインドは適当に
-    (global-set-key (kbd "C-c C-w C-w") warp-mode)
-    ;; Markdown を変換する場合
-    (add-to-list 'warp-format-converter-alist
-                 '("\\.md\\|\\.markdown" t (lambda ()
-                                             ;; 使っているコマンドを指定
-                                             '("markdown"))))
+{% codeblock lang:cl %}
+(add-to-list 'load-path "/path/to/warp-directory")
+(require 'warp)
+;; キーバインドは適当に
+(global-set-key (kbd "C-c C-w C-w") warp-mode)
+;; Markdown を変換する場合
+(add-to-list 'warp-format-converter-alist
+             '("\\.md\\|\\.markdown" t (lambda ()
+                                         ;; 使っているコマンドを指定
+                                         '("markdown"))))
+{% endcodeblock %}
 
 以上でインストールはおしまいです。お疲れ様でした〜。
 
@@ -93,7 +99,7 @@ README.mdを開いて `M-x warp-mode` してみてください。
 - warp-send-current-buffer
 
   カレントバッファをコンバートしつつクライアントに転送します (`C-c C-w w`)
-  
+
 
 ## 設定
 
@@ -103,10 +109,12 @@ README.mdを開いて `M-x warp-mode` してみてください。
 りしてくれるんですが、そこまでやらなくてもいいよって方は以下のように設
 定すると良いかと。
 
-        (custom-set-variables
-         '(warp-auto-start-sending nil)      ; 自動転送を無効に
-         '(warp-auto-open-client nil)        ; クライアントの自動起動を無効に
-         '(warp-auto-start-auto-scroll nil)) ; 自動スクロールを無効に
+{% codeblock lang:cl %}
+(custom-set-variables
+ '(warp-auto-start-sending nil)      ; 自動転送を無効に
+ '(warp-auto-open-client nil)        ; クライアントの自動起動を無効に
+ '(warp-auto-start-auto-scroll nil)) ; 自動スクロールを無効に
+{% endcodeblock %}
 
 ### Markdown, HTML 以外のフォーマット
 
@@ -115,12 +123,16 @@ Warp は原理的にはシェルコマンドを使ってHTMLに変換できる�
 にさせてもらいました。例えばtextileをredclothでコンバートするための設定
 は以下のようになります（redclothのインストールが必要です）。
 
-        (add-to-list 'warp-format-converter-alist
-                     '("\\.textile" t (lambda () '("redcloth"))))
-    
+{% codeblock lang:cl %}
+(add-to-list 'warp-format-converter-alist
+             '("\\.textile" t (lambda () '("redcloth"))))
+{% endcodeblock %}
+
 ※ 自分の環境だと以下の記述がないとエラーがでました。
 
-        (setenv "LC_ALL" "en_US.UTF-8")
+{% codeblock lang:cl %}
+(setenv "LC_ALL" "en_US.UTF-8")
+{% endcodeblock %}
 
 `warp-format-converter-alist` に設定しているリストが設定情報になります。
 設定情報の各要素は次のようになります。
