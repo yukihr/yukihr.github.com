@@ -1,10 +1,11 @@
 $blockquote: $type-border !default;
 $sans: Arial, Helvetica, sans-serif !default;
+$sans-jp: 'Trebuchet MS', 'Arial', 'Helvetica', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', Meiryo, 'ＭＳ Ｐゴシック', 'MS PGothic', sans-serif !default;
 $serif: Georgia, "Times New Roman", Times, serif !default;
 $times: "Times New Roman", Times, serif !default;
 $mono: Menlo, Monaco, "Andale Mono", "lucida console", "Courier New", monospace !default;
 //$heading-font-family: "PT Serif", "Georgia", "Helvetica Neue", Arial, sans-serif !default;
-$heading-font-family: 'Lustria', $sans !default;
+$heading-font-family: 'Lustria', 'PT Sans', $sans-jp !default;
 $header-title-font-family: $heading-font-family !default;
 $header-subtitle-font-family: $heading-font-family !default;
 
@@ -12,7 +13,7 @@ $header-subtitle-font-family: $heading-font-family !default;
 .heading {
   font-family: $heading-font-family;
 }
-.sans { font-family: $sans; }
+.sans { font-family: $sans-jp; }
 .serif { font-family: $serif; }
 .times { font-family: $times; }
 .mono { font-family: $mono; }
@@ -20,7 +21,7 @@ $header-subtitle-font-family: $heading-font-family !default;
 body > header h1 {
   font-size: 42px;
   @extend .heading;
-  font-family: 'Lustria', $serif;
+  font-family: 'Lustria', 'PT Serif', $serif;
   font-weight: normal;
   line-height: 1.2em;
   margin-bottom: 0.6667em;
