@@ -1,5 +1,5 @@
 $max-width: 1050px !default;
-$main-max-width: 720px !default;
+$main-max-width: 750px !default;
 
 // Padding used for layout margins
 $pad-min: 18px !default;
@@ -149,9 +149,9 @@ body.sidebar-footer {
 @media only screen and (min-width: 750px) {
   aside.sidebar { @include collapse-sidebar; }
   #main {
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
+    // border-radius: 20px;
+    // -webkit-border-radius: 20px;
+    // -moz-border-radius: 20px;
     @extend .group;
     padding: 1rem;
     margin: $pad-medium auto;
