@@ -7,6 +7,8 @@ categories: [JavaScript, Articles]
 ---
 Web 開発に有益な情報を提供してくれる[Smashing Magazine](http://www.smashingmagazine.com/)に、米Yahoo!開発者のDouglas Crockford氏のインタビューが載っています。
 
+<!-- more -->
+
 [How I Work: Yahoo!’s Doug Crockford On JavaScript](http://coding.smashingmagazine.com/2012/04/27/yahoos-doug-crockford-on-javascript/)
 
 Douglas Crockford 氏といえば、[JavaScript: The Good Parts](http://www.amazon.co.jp/gp/product/4873113911/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&tag=yukihr-22&linkCode=as2&camp=247&creative=1211&creativeASIN=4873113911) の著者であり、JSONの発見者でもあり、JavaScript開発者であれば知らない人はいないというほどの有名開発者ですが、氏がモノづくりをする上での考え方や習慣について語っているようです。

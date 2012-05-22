@@ -10,6 +10,8 @@ Emacs のモードラインをいい感じにしました。こんな感じ。
 
 ![新しいモードライン](/images/emacs_modeline_after.png)
 
+<!-- more -->
+
 ちなみにいい感じにする前のモードラインはこんな感じです。
 
 ![前のモードライン](/images/emacs_modeline_before.png)

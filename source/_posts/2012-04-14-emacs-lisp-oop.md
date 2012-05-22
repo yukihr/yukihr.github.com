@@ -8,6 +8,8 @@ categories: Emacs
 Elisp でオブジェクト指向プログラミング（OOP）を実現する方法について調べためも。
 ある程度の量のコードを書くならやはり慣れたOOPが便利ということで。
 
+<!-- more -->
+
 ## 基本
 
 * [On Lisp - オブジェクト指向Lisp](http://www.asahi-net.or.jp/~kc7k-nd/onlispjhtml/objectOrientedLisp.html)

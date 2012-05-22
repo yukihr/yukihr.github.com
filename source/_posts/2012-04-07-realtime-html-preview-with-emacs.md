@@ -9,6 +9,8 @@ categories: Emacs
 EmacsでMarkdownやHTMLをリアルタイムでプレビューしながら編集できるWarp
 というのを作ったのでご紹介〜。
 
+<!-- more -->
+
 [Github - yukihr/Warp](https://github.com/yukihr/Warp)
 
 HTMLはともかくMarkdownなどのHTMLにコンバートできるフォーマットのプレ

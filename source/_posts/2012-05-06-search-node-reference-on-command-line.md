@@ -9,6 +9,8 @@ ruby には ri や refe, bitclust ([http://www.ruby-lang.org/ja/documentation/](
 
 そういうツールのNode.js用の物が欲しかったので、週末ハックということで作ってみました。 [yukihr/nore](https://github.com/yukihr/nore) になります。
 
+<!-- more -->
+
 添付のelisp (misc/nore.el) を使うと、下のような感じでEmacsからNode.jsのリファレンスを引けるようになります（npmに登録してないので、インストールがちょっと面倒ですが・・・）。
 
 ![nore-emacs](/images/nore-emacs.png)

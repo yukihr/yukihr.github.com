@@ -7,6 +7,8 @@ categories: [Mac, App]
 ---
 最近お気に入りのMac用Appを紹介します。
 
+<!-- more -->
+
 ## Window Magnet
 
 [Mac App Store - Window Magnet](http://itunes.apple.com/jp/app/window-magnet/id441258766?l=en&mt=12)
