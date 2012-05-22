@@ -30,9 +30,9 @@ function draw() {
       $(canvas).css('left',
                     - (img.width - windowStat.width) / 2 + 70
                    );
-      $(canvas).css('top',
-                    -50 - (windowStat.scrollY / $(document).height() * img.height * 20)
-                   );
+      // $(canvas).css('top',
+      //               -50 - (windowStat.scrollY / $(document).height() * img.height * 20)
+      //              );
     }
     function getWindowStat() {
       return {
