@@ -4,17 +4,28 @@
         text-indent: -9999px;
         @include transition(0.3s);
         display: inline-block;
-        width: 32px;
-        height: 32px;
-        margin-right: 15px;
+        width: 35px;
+        height: 35px;
+        margin: 0 15px 10px 0;
+        opacity: 0.6;
+        @include border-radius(7px);
         &[rel=twitter]{
-            background: image-url('twitter_32.png') center no-repeat;
+            background: image-url('twitter_32.png') center no-repeat #FFF;
+            &:hover {
+                background-color: #95EFF8;
+            }
         }
         &[rel=github]{
-            background: image-url('github_32.png') center no-repeat;
+            background: image-url('github_32.png') center no-repeat #FFF;
+            &:hover {
+                background-color: rgb(205,212,232);
+            }
         }
         &[rel=rss]{
-            background: image-url('rss_32.png') center no-repeat;
+            background: image-url('rss_32.png') center no-repeat #FFF;
+            &:hover {
+                background-color: #FF9572;
+            }
         }
     }
 }
