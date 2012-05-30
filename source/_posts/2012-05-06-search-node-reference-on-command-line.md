@@ -3,7 +3,7 @@ layout: post
 title: "Node.js のリファレンスをコマンドラインから検索するツールを作ってみた"
 date: 2012-05-06 21:38
 comments: true
-categories: [ node.js, Emacs ]
+categories: [ Node.js, Emacs ]
 ---
 ruby には ri や refe, bitclust ([http://www.ruby-lang.org/ja/documentation/](http://www.ruby-lang.org/ja/documentation/) からダウンロードできます) という便利なツールがあり、コマンドラインからリファレンスを引くことが簡単にできます。コマンドラインツールとして実装されているため、EmacsやVimなどのエディタと組み合わせるのも容易で、例えば、カーソル下のメソッドのリファレンスを瞬時に検索して表示するなんていうことが簡単にできまして、プログラミングをする上では非常に助けになります。
 
