@@ -1,11 +1,11 @@
 .social {
     @include horizontal-list(0);
+    vertical-align: top;
+    text-align: center;
     a {
         @include transition(0.3s);
         color: #bbb;
-        text-align: center;
         text-decoration: none;
-        vertical-align: center;
         font-size: 24px;
         display: inline-block;
         width: 35px;
