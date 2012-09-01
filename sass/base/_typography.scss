@@ -10,6 +10,18 @@ $header-title-font-family: $heading-font-family !default;
 $header-subtitle-font-family: $heading-font-family !default;
 
 // Fonts
+@font-face{ 
+    font-family: 'WebIconFonts';
+    src: url('/assets/webiconfonts/webiconfonts.eot');
+    src: url('/assets/webiconfonts/WebIconFonts.eot?') format('eot'),
+         url('/assets/webiconfonts/WebIconFonts.woff') format('woff'),
+         url('/assets/webiconfonts/WebIconFonts.ttf') format('truetype');
+}
+
+.icon-font {
+    font-family: WebIconFonts;
+}
+
 .heading {
   font-family: $heading-font-family;
 }
