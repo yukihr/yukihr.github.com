@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Vim | flowery *]]></title>
+  <link href="http://yukihr.github.com/blog/categories/vim/atom.xml" rel="self"/>
+  <link href="http://yukihr.github.com/"/>
+  <updated>2013-01-15T20:56:05+09:00</updated>
+  <id>http://yukihr.github.com/</id>
+  <author>
+    <name><![CDATA[yukihr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Evil で物理行移動]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/15/emacs-evil-vilual-line-move-with-jk/"/>
+    <updated>2012-05-15T21:02:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/15/emacs-evil-vilual-line-move-with-jk</id>
+    <content type="html"><![CDATA[<p>Emacs では、Vimのようなモードによる操作を実現するVimpulseを使っていたんですが、Vimpulse後継のEvilが開発されているのをSoftware Design誌の記事で知り最近乗り換えました。</p>
+
+<!-- more -->
+
+
+<p>Evilではデフォルトでjkでの移動が論理行移動に設定されています。これを物理行移動にする設定が用意されてないのかなー、とソースを探索していたところ <code>evil-next-visual-line</code>, <code>evil-previous-visual-line</code> というコマンドが定義されているのを見つけました。これらはデフォルトでは、<code>gj</code>, <code>gk</code>のキーに設定されています。これを <code>j</code>, <code>k</code>に設定するには以下のようにします。</p>
+
+<p><div><script src='https://gist.github.com/2701180.js'></script>
+<noscript><pre><code>(define-key 'evil-motion-state-map &quot;j&quot; evil-next-visual-line)
+(define-key 'evil-motion-state-map &quot;k&quot; evil-previous-visual-line)
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+</feed>

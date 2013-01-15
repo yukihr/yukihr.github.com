@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Emacs | flowery *]]></title>
+  <link href="http://yukihr.github.com/blog/categories/emacs/atom.xml" rel="self"/>
+  <link href="http://yukihr.github.com/"/>
+  <updated>2013-01-15T20:56:05+09:00</updated>
+  <id>http://yukihr.github.com/</id>
+  <author>
+    <name><![CDATA[yukihr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emacsで多数の非同期シェルコマンドを実行する]]></title>
+    <link href="http://yukihr.github.com/blog/2012/12/15/emacs-multiple-async-command/"/>
+    <updated>2012-12-15T11:57:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/12/15/emacs-multiple-async-command</id>
+    <content type="html"><![CDATA[<p>Emacsでは<code>M-!</code>でシェルコマンドを実行できるんですが、これで実行したコマンドは同期実行になってしまって、コマンドが終了するまで他の操作ができなくなります。
+時間のかかるコマンドや常にバックグラウンドで走らせておきたいコマンドを実行するには不便です(というか無理)。</p>
+
+<p>実は<code>M-!</code>でシェルでやるようにコマンドの後ろに<code>&amp;</code>をつけてやると、コマンドが非同期実行になり、Emacsのスレッドを停止しなくなるので他のバッファ操作をしながらコマンドを走らせておくことができます。便利ですね。あと、これ<code>M-&amp;</code>でもできます。</p>
+
+<p>ただ、これ、デフォルトの状態だとひとつの非同期コマンドしか実行できないんですよ・・・。Railsでよくあるように、<code>M-&amp; rails server</code>して、<code>M-&amp; guard</code> とかできないんです・・・。
+なんとかならないもんかなあ、とググってたら発見しました。</p>
+
+<p><a href="http://www.emacswiki.org/emacs/ExecuteExternalCommand#toc4">Running a Shell Command Asynchronously</a></p>
+
+<p>ここにあるコードで、複数コマンドのサポートが可能になります！あと、わかりやすいように元のコマンドを出力バッファのうえの方に表示してくれます！</p>
+
+<p>わんだほー</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs + Xcode4.5 iOSアプリ開発設定]]></title>
+    <link href="http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/"/>
+    <updated>2012-11-01T17:12:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings</id>
+    <content type="html"><![CDATA[<p>EmacsとXcode4.5でiOSアプリを開発をするための設定です。ウェブ上にEmacs + Xcodeで開発するための設定は色々とあるんですが、Xcode側の変更によってが動作するものが少なかった(特にFlymakeと補完)のでまとめておきたいと思います。実際の開発作業ではXcodeもEmacsと別に起動しておいて、必要に応じて切り替えて使っています。</p>
+
+<ul>
+<li>obj-c-modeでソースファイルを開く</li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-auto-mode.el'></script>
+<noscript><pre><code>;; Auto mode
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@implementation&quot; . objc-mode))
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@interface&quot; . objc-mode))
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@protocol&quot; . objc-mode))
+</code></pre></noscript></div>
+</p>
+
+<ul>
+<li>ヘッダと実装ファイルをジャンプする(C-c t)</li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-jump-header.el'></script>
+<noscript><pre><code>;; Jump between header and impl
+(setq ff-other-file-alist
+     '((&quot;\\.mm?$&quot; (&quot;.h&quot;))
+       (&quot;\\.cc$&quot;  (&quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.hh$&quot;  (&quot;.cc&quot; &quot;.C&quot;))
+
+       (&quot;\\.c$&quot;   (&quot;.h&quot;))
+       (&quot;\\.h$&quot;   (&quot;.c&quot; &quot;.cc&quot; &quot;.C&quot; &quot;.CC&quot; &quot;.cxx&quot; &quot;.cpp&quot; &quot;.m&quot; &quot;.mm&quot;))
+
+       (&quot;\\.C$&quot;   (&quot;.H&quot;  &quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.H$&quot;   (&quot;.C&quot;  &quot;.CC&quot;))
+
+       (&quot;\\.CC$&quot;  (&quot;.HH&quot; &quot;.H&quot;  &quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.HH$&quot;  (&quot;.CC&quot;))
+
+       (&quot;\\.cxx$&quot; (&quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.cpp$&quot; (&quot;.hpp&quot; &quot;.hh&quot; &quot;.h&quot;))
+
+       (&quot;\\.hpp$&quot; (&quot;.cpp&quot; &quot;.c&quot;))))
+
+(add-hook 'objc-mode-hook
+         (lambda ()
+           (define-key c-mode-base-map (kbd &quot;C-c t&quot;) 'ff-find-other-file)
+         ))
+</code></pre></noscript></div>
+</p>
+
+<ul>
+<li>カーソル下の単語または選択範囲をXcodeのオーガナイザで検索する(C-c r)</li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-search-doc.el'></script>
+<noscript><pre><code>;; Documentation Search
+(defun region-string-or-currnet-word ()
+  &quot;Get region string if region is set, else get current word.&quot;
+  (if mark-active
+      (buffer-substring (region-beginning) (region-end))
+    (current-word)))
+
+(defun xcode:searchdoc ()
+  (interactive)
+  (let ((term (region-string-or-currnet-word)))
+    (do-applescript
+     (format
+      (concat
+       &quot;tell application \&quot;System Events\&quot; \r&quot;
+       &quot;  tell process \&quot;Xcode\&quot; \r&quot;
+                                        ; -- Activate Xcode if necessary
+       &quot;    set frontmost to true \r&quot;
+                                        ;    -- Open the Organizer
+       &quot;    keystroke \&quot;2\&quot; using {shift down, command down} \r&quot;
+       &quot;    set organizer to window 1 \r&quot;
+                                        ;    -- Select the Documentation panel if it's not already selected
+       &quot;    if the title of organizer is not \&quot;Organizer - Documentation\&quot; then \r&quot;
+       &quot;      click button \&quot;Documentation\&quot; of tool bar 1 of organizer \r&quot;
+       &quot;      delay 0.1 \r&quot;
+       &quot;      set organizer to window 1 \r&quot;
+       &quot;    end if \r&quot;
+                                        ;    -- Move focus to the search field
+       &quot;    set searchField to text field 1 of splitter group 1 of organizer \r&quot;
+       &quot;    set searchField's focused to true \r&quot;
+       &quot;    set value of searchField to \&quot;&quot; term &quot;\&quot; \r&quot;
+       &quot;  end tell \r&quot;
+       &quot;end tell \r&quot;
+       )))))
+
+(add-hook 'objc-mode-hook (lambda ()
+  (define-key objc-mode-map (kbd &quot;C-c r&quot;) 'xcode:searchdoc)))
+</code></pre></noscript></div>
+</p>
+
+<ul>
+<li><p>SDKのパス設定</p>
+
+<p>FlymakeとAutocompleteの設定に利用します。</p></li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-sdk-settings.el'></script>
+<noscript><pre><code>;; SDK Place
+(defvar xcode:sdkver &quot;6.0&quot;)
+(defvar xcode:sdkpath &quot;/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer&quot;)
+(defvar xcode:sdk (concat xcode:sdkpath &quot;/SDKs/iPhoneSimulator&quot; xcode:sdkver &quot;.sdk&quot;))
+</code></pre></noscript></div>
+</p>
+
+<ul>
+<li><p>Autocompleteによる補完設定</p>
+
+<p>別途<a href="https://github.com/brianjcj/auto-complete-clang">auto-complete-clang.el</a>をダウンロードし、elispのインストールディレクトリに置いておきます。</p></li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-auto-complete.el'></script>
+<noscript><pre><code>;; auto-complete-mode
+(setq ac-modes (append ac-modes '(objc-mode)))
+(add-to-load-path &quot;vendor/auto-complete-clang&quot;) ;; Set your own Path
+(setq ac-clang-flags (list &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot; &quot;-x&quot; &quot;objective-c&quot; &quot;-std=gnu99&quot; &quot;-isysroot&quot; xcode:sdk &quot;-I.&quot; &quot;-F..&quot; &quot;-fblocks&quot;))
+(require 'auto-complete-clang)
+;; (setq ac-clang-prefix-header &quot;stdafx.pch&quot;)
+;; (setq ac-clang-flags '(&quot;-w&quot; &quot;-ferror-limit&quot; &quot;1&quot;))
+;(setq clang-completion-flags (list &quot;-Wall&quot; &quot;-Wextra&quot; &quot;-fsyntax-only&quot; &quot;-ObjC&quot; &quot;-std=c99&quot; &quot;-isysroot&quot; &quot;/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk&quot; &quot;-I.&quot; &quot;-F..&quot; &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot;))
+(add-hook 'objc-mode-hook
+          (lambda () (setq ac-sources (append '(ac-source-clang
+                                                ac-source-yasnippet
+                                                ac-source-gtags)
+                                              ac-sources))))
+</code></pre></noscript></div>
+</p>
+
+<p>  三行目の設定をauto-complete-clang.elを置いたパスで置き換えてください。</p>
+
+<ul>
+<li>Flymake</li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-flymake.el'></script>
+<noscript><pre><code>;; flymake エラー表示は参考程度に・・・
+(require 'flymake)
+;(defvar flymake-objc-compiler (concat xcode:sdkpath &quot;/usr/bin/gcc&quot;))
+(defvar flymake-objc-compiler (executable-find &quot;clang&quot;))
+;;(defvar flymake-objc-compile-default-options (list &quot;-Wall&quot; &quot;-Wextra&quot; &quot;-fsyntax-only&quot; &quot;-x&quot; &quot;objective-c&quot; &quot;-std=c99&quot;))
+(defvar flymake-objc-compile-default-options (list &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot; &quot;-fsyntax-only&quot; &quot;-fno-color-diagnostics&quot; &quot;-fobjc-arc&quot; &quot;-fblocks&quot; &quot;-Wreturn-type&quot; &quot;-Wparentheses&quot; &quot;-Wswitch&quot; &quot;-Wno-unused-parameter&quot; &quot;-Wunused-variable&quot; &quot;-Wunused-value&quot; &quot;-isysroot&quot; xcode:sdk))
+(defvar flymake-last-position nil)
+(defcustom flymake-objc-compile-options '(&quot;-I.&quot;)
+  &quot;Compile option for objc check.&quot;
+  :group 'flymake
+  :type '(repeat (string)))
+
+(defun flymake-objc-init ()
+ (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                    'flymake-create-temp-inplace))
+        (local-file (file-relative-name
+                     temp-file
+                     (file-name-directory buffer-file-name))))
+   (list flymake-objc-compiler (append flymake-objc-compile-default-options flymake-objc-compile-options (list local-file)))))
+
+(setq flymake-err-line-patterns
+      (cons
+       '(&quot;\\(.+\\):\\([0-9]+\\):\\([0-9]+\\): \\(.+\\)&quot; 1 2 3 4)
+       flymake-err-line-patterns))
+
+(defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+  ;(setq flymake-check-was-interrupted t)
+  ;; dirty hack.... for clang command always exit with status code 1
+  (setq exit-status 0))
+
+(add-hook 'objc-mode-hook
+         (lambda ()
+           (ad-activate 'flymake-post-syntax-check)
+           ;; 拡張子 m と h に対して flymake を有効にする設定 flymake-mode t の前に書く必要があります
+           (push '(&quot;\\.m$&quot; flymake-objc-init) flymake-allowed-file-name-masks)
+           (push '(&quot;\\.h$&quot; flymake-objc-init) flymake-allowed-file-name-masks)
+           (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
+               (flymake-mode t))))
+</code></pre></noscript></div>
+</p>
+
+<p>  26行目からの箇所では、コンパイラのclangがExit Code = 1で終了する（オプションを変更すればExitCode=0で終了させられるかもしれません・・）ことでFlymakeがエラーになってしまうことに対処しています。この設定によってFlymakeがコマンドの異常終了を拾わなくなり、他の言語の設定に影響があるかもしれないので注意してください。</p>
+
+<p>本ページの設定については以下のページを参考にさせていただきました。ありがとうございました！</p>
+
+<ul>
+<li><a href="http://sakito.jp/emacs/emacsobjectivec.html">Emacs で iPhone アプリ開発を快適にするための設定</a></li>
+<li><a href="https://gist.github.com/2500847">Jump to the documentation search field in Xcode 4 using AppleScript.</a></li>
+<li><a href="http://ponpoko1968.hatenablog.com/entry/20101030/1288395400">clangを使ったCのコード補完</a></li>
+<li><a href="http://blog.fenrir-inc.com/us/2012/04/objective-c-in-emacs-check-the-syntax-in-flymake.html">[Objective-C in Emacs] Check the syntax in flymake</a></li>
+<li><a href="http://roupam.github.com/">Emacs for Xcode+ios Development</a></li>
+</ul>
+
+
+<p>でわー！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Evil で物理行移動]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/15/emacs-evil-vilual-line-move-with-jk/"/>
+    <updated>2012-05-15T21:02:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/15/emacs-evil-vilual-line-move-with-jk</id>
+    <content type="html"><![CDATA[<p>Emacs では、Vimのようなモードによる操作を実現するVimpulseを使っていたんですが、Vimpulse後継のEvilが開発されているのをSoftware Design誌の記事で知り最近乗り換えました。</p>
+
+<!-- more -->
+
+
+<p>Evilではデフォルトでjkでの移動が論理行移動に設定されています。これを物理行移動にする設定が用意されてないのかなー、とソースを探索していたところ <code>evil-next-visual-line</code>, <code>evil-previous-visual-line</code> というコマンドが定義されているのを見つけました。これらはデフォルトでは、<code>gj</code>, <code>gk</code>のキーに設定されています。これを <code>j</code>, <code>k</code>に設定するには以下のようにします。</p>
+
+<p><div><script src='https://gist.github.com/2701180.js'></script>
+<noscript><pre><code>(define-key 'evil-motion-state-map &quot;j&quot; evil-next-visual-line)
+(define-key 'evil-motion-state-map &quot;k&quot; evil-previous-visual-line)
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Node.js のリファレンスをコマンドラインから検索するツールを作ってみた]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/06/search-node-reference-on-command-line/"/>
+    <updated>2012-05-06T21:38:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/06/search-node-reference-on-command-line</id>
+    <content type="html"><![CDATA[<p>ruby には ri や refe, bitclust (<a href="http://www.ruby-lang.org/ja/documentation/">http://www.ruby-lang.org/ja/documentation/</a> からダウンロードできます) という便利なツールがあり、コマンドラインからリファレンスを引くことが簡単にできます。コマンドラインツールとして実装されているため、EmacsやVimなどのエディタと組み合わせるのも容易で、例えば、カーソル下のメソッドのリファレンスを瞬時に検索して表示するなんていうことが簡単にできまして、プログラミングをする上では非常に助けになります。</p>
+
+<p>そういうツールのNode.js用の物が欲しかったので、週末ハックということで作ってみました。 <a href="https://github.com/yukihr/nore">yukihr/nore</a> になります。</p>
+
+<!-- more -->
+
+
+<p>添付のelisp (misc/nore.el) を使うと、下のような感じでEmacsからNode.jsのリファレンスを引けるようになります（npmに登録してないので、インストールがちょっと面倒ですが・・・）。</p>
+
+<p><img src="/images/nore-emacs.png" alt="nore-emacs" /></p>
+
+<p>Node.js のリファレンス自体HTML１ページに収まってしまうので、インデックスをつくるなど仕組みとしてはちょっと大げさかもしれません。あと、今のところ完全一致検索にしか対応してないので手でクエリを入力しての検索は頼りにならないかも、とか、HTMLの出力がいい加減で読みづらい、とか、日本語にしか対応してないとか有るんですが、後々何とかするかもしれません（適当ですみません・・）。</p>
+
+<p>良かったら使ってみてください。</p>
+
+<p>追記）</p>
+
+<p>これを作っていて、インストールしているnpmモジュール全部のドキュメント、例えば、doc/ 以下にあるMarkdown形式のドキュメントを一括して検索できるツールがあってもいいのかなー、なんて思いました。まあ、npm docsコマンドでもリファレンスのURLをブラウザで開けるのでそれだけで事足りるし、検索しなくても全体を把握できるような小さなモジュールを組み合わせるのがいわゆるNode (npm)らしさなのかもしれません（個人的に、こういう生態系ができたのはJSがクラスベースでなくプロトタイプベースであることが影響しているんじゃないかと思ってますが）。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs のモードラインをいい感じにした]]></title>
+    <link href="http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline/"/>
+    <updated>2012-04-27T01:02:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline</id>
+    <content type="html"><![CDATA[<p>Emacs のモードラインをいい感じにしました。こんな感じ。</p>
+
+<p><img src="/images/emacs_modeline_after.png" alt="新しいモードライン" /></p>
+
+<!-- more -->
+
+
+<p>ちなみにいい感じにする前のモードラインはこんな感じです。</p>
+
+<p><img src="/images/emacs_modeline_before.png" alt="前のモードライン" /></p>
+
+<p>標準のモードラインが良くないってわけじゃないんですけど、3Dのごつごつし
+た感じとか暗号の羅列のようなUIはもうちょっと何とかならないんかなーと思っ
+てたんですが、簡単でしたね。<strong>自分でカスタマイズすればいい</strong>んですよ。
+さすがはEmacs様でしてそこはカスタマイズのためのインターフェイス（？）をちゃ
+んと用意してくれているのですよ。しかもかなり柔軟に見た目を制御できるん
+ですな！でもまあ、このカスタムの仕方がなかなか難しいんですよね。でー、
+ググッていたらよさそうなカスタマイズをハケーンして、それを参考（という
+かほとんどコピぺ）させてもらったという次第です。</p>
+
+<p>こちらのサイト様を参考にさせていただきました m(_ _)m</p>
+
+<p><a href="http://amitp.blogspot.jp/2011/08/emacs-custom-mode-line.html">Emacs: custom mode line - From Amit’s Thoughts</a></p>
+
+<p>このサイトの設定の何がいいかというと、それは</p>
+
+<ul>
+<li>編集を邪魔しない存在感</li>
+<li>必要最低限の情報。でも、出すべきものはちゃんと出している</li>
+<li>重要な情報はちゃんと視認性がよくなっている</li>
+</ul>
+
+
+<p>そんな的を射た設定に大変感銘を受けたのであります。</p>
+
+<p>しかし、まあ日本人としとは文字コード表示が削られているのとか抵抗があるので、諸々調整しました。
+以下のような部分です。</p>
+
+<ul>
+<li>文字コードなどの情報（後々もっと見やすくしたいなー。 "utf-8" とかちゃんと全部表示したい）</li>
+<li>nyan-mode はいいや・・</li>
+<li>行数の表示は 現在の行/全体の行 のフォーマットで</li>
+<li>evil のモードインジケータも表示したいな</li>
+<li>あとはフォントサイズや色を自分好みに</li>
+</ul>
+
+
+<p>・・・ってことで。</p>
+
+<p><a href="https://github.com/yukihr/dotfiles/blob/master/.emacs.d/inits/07_modeline.el">設定部分のソースはココ</a></p>
+
+<p>正直 Vim の powerline がかっこ良くて羨ましくて Vim に乗り換えるか・・
+(<a href="http://www.emacswiki.org/emacs/PowerLine">Emacsでもpowerline</a>あるみたいなんですけど、自環境でうまく動かず・・)とか思ってたんですがここまで出来れば私はもう満足です。</p>
+
+<p>（追記
+後々カスタム方法をまとめたポストも書きたいと思っています（自分用メモでもある＞＜）。</p>
+]]></content>
+  </entry>
+  
+</feed>

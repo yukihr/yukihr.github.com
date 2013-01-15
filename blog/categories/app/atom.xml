@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: App | flowery *]]></title>
+  <link href="http://yukihr.github.com/blog/categories/app/atom.xml" rel="self"/>
+  <link href="http://yukihr.github.com/"/>
+  <updated>2013-01-15T20:56:05+09:00</updated>
+  <id>http://yukihr.github.com/</id>
+  <author>
+    <name><![CDATA[yukihr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[小回りのきくMac Appの紹介。Window Magnet と Flycut]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/16/two-useful-mac-apps/"/>
+    <updated>2012-05-16T22:06:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/16/two-useful-mac-apps</id>
+    <content type="html"><![CDATA[<p>最近お気に入りのMac用Appを紹介します。</p>
+
+<!-- more -->
+
+
+<h2>Window Magnet</h2>
+
+<p><a href="http://itunes.apple.com/jp/app/window-magnet/id441258766?l=en&amp;mt=12">Mac App Store - Window Magnet</a></p>
+
+<p><img src="/images/window-magnet.png" alt="Window Magnet" /></p>
+
+<p>Windows7のウィンドウは画面の端に持って行くと自動的にサイズを調整してくれるんですが、これがかなり便利でMacにも同じような機能があったらなー、と思ってたんですが、探すといくつか同様の機能を持ったアプリがありました。
+そのなかでも一番使い心地の良かったのがこのWindowMagnetです。</p>
+
+<p>体験版がないので購入に躊躇してしまうかもですが、とても自然な操作感で機能も豊富です。これで85円は買いだと思います。</p>
+
+<h2>Flycut</h2>
+
+<p><a href="http://itunes.apple.com/jp/app/flycut-clipboard-manager/id442160987?l=en&amp;mt=12">Mac App Store - Flycut</a></p>
+
+<p><img src="/images/flycut.png" alt="Flycut" /></p>
+
+<p>シンプルなクリップボードマネージャです。
+コピーしたテキストの履歴にメニューバーアイコンからアクセスできます。</p>
+
+<p>こちらは無料なので是非。</p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Node.js | flowery *]]></title>
+  <link href="http://yukihr.github.com/blog/categories/node-js/atom.xml" rel="self"/>
+  <link href="http://yukihr.github.com/"/>
+  <updated>2013-01-15T20:56:05+09:00</updated>
+  <id>http://yukihr.github.com/</id>
+  <author>
+    <name><![CDATA[yukihr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Node.js のリファレンスをコマンドラインから検索するツールを作ってみた]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/06/search-node-reference-on-command-line/"/>
+    <updated>2012-05-06T21:38:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/06/search-node-reference-on-command-line</id>
+    <content type="html"><![CDATA[<p>ruby には ri や refe, bitclust (<a href="http://www.ruby-lang.org/ja/documentation/">http://www.ruby-lang.org/ja/documentation/</a> からダウンロードできます) という便利なツールがあり、コマンドラインからリファレンスを引くことが簡単にできます。コマンドラインツールとして実装されているため、EmacsやVimなどのエディタと組み合わせるのも容易で、例えば、カーソル下のメソッドのリファレンスを瞬時に検索して表示するなんていうことが簡単にできまして、プログラミングをする上では非常に助けになります。</p>
+
+<p>そういうツールのNode.js用の物が欲しかったので、週末ハックということで作ってみました。 <a href="https://github.com/yukihr/nore">yukihr/nore</a> になります。</p>
+
+<!-- more -->
+
+
+<p>添付のelisp (misc/nore.el) を使うと、下のような感じでEmacsからNode.jsのリファレンスを引けるようになります（npmに登録してないので、インストールがちょっと面倒ですが・・・）。</p>
+
+<p><img src="/images/nore-emacs.png" alt="nore-emacs" /></p>
+
+<p>Node.js のリファレンス自体HTML１ページに収まってしまうので、インデックスをつくるなど仕組みとしてはちょっと大げさかもしれません。あと、今のところ完全一致検索にしか対応してないので手でクエリを入力しての検索は頼りにならないかも、とか、HTMLの出力がいい加減で読みづらい、とか、日本語にしか対応してないとか有るんですが、後々何とかするかもしれません（適当ですみません・・）。</p>
+
+<p>良かったら使ってみてください。</p>
+
+<p>追記）</p>
+
+<p>これを作っていて、インストールしているnpmモジュール全部のドキュメント、例えば、doc/ 以下にあるMarkdown形式のドキュメントを一括して検索できるツールがあってもいいのかなー、なんて思いました。まあ、npm docsコマンドでもリファレンスのURLをブラウザで開けるのでそれだけで事足りるし、検索しなくても全体を把握できるような小さなモジュールを組み合わせるのがいわゆるNode (npm)らしさなのかもしれません（個人的に、こういう生態系ができたのはJSがクラスベースでなくプロトタイプベースであることが影響しているんじゃないかと思ってますが）。</p>
+]]></content>
+  </entry>
+  
+</feed>

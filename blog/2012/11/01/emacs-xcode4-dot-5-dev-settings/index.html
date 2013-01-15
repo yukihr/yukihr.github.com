@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>flowery *</title>
+  <title>Emacs + Xcode4.5 iOSアプリ開発設定 - flowery *</title>
   <meta name="author" content="yukihr">
 
   
-  <meta name="description" content="EmacsではM-!でシェルコマンドを実行できるんですが、これで実行したコマンドは同期実行になってしまって、コマンドが終了するまで他の操作ができなくなります。
-時間のかかるコマンドや常にバックグラウンドで走らせておきたいコマンドを実行するには不便です(というか無理)。 実はM-! &hellip;">
+  <meta name="description" content="EmacsとXcode4.5でiOSアプリを開発をするための設定です。ウェブ上にEmacs + Xcodeで開発するための設定は色々とあるんですが、Xcode側の変更によってが動作するものが少なかった(特にFlymakeと補完)のでまとめておきたいと思います。 &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://yukihr.github.com/">
+  <link rel="canonical" href="http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href='http://fonts.googleapis.com/css?family=Lustria' rel='stylesheet' type='text/css'>
@@ -64,63 +63,12 @@
 </div>
   <div id="main">
     <div id="content">
-      <div class="blog-index">
+      <div>
+<article class="hentry" role="article">
   
-  
-  
-    <article>
-      
   <header>
     
-      <h1 class="entry-title"><a href="/blog/2012/12/15/emacs-multiple-async-command/">Emacsで多数の非同期シェルコマンドを実行する</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-12-15T11:57:00+09:00" pubdate data-updated="true">Dec 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Emacsでは<code>M-!</code>でシェルコマンドを実行できるんですが、これで実行したコマンドは同期実行になってしまって、コマンドが終了するまで他の操作ができなくなります。
-時間のかかるコマンドや常にバックグラウンドで走らせておきたいコマンドを実行するには不便です(というか無理)。</p>
-
-<p>実は<code>M-!</code>でシェルでやるようにコマンドの後ろに<code>&amp;</code>をつけてやると、コマンドが非同期実行になり、Emacsのスレッドを停止しなくなるので他のバッファ操作をしながらコマンドを走らせておくことができます。便利ですね。あと、これ<code>M-&amp;</code>でもできます。</p>
-
-<p>ただ、これ、デフォルトの状態だとひとつの非同期コマンドしか実行できないんですよ・・・。Railsでよくあるように、<code>M-&amp; rails server</code>して、<code>M-&amp; guard</code> とかできないんです・・・。
-なんとかならないもんかなあ、とググってたら発見しました。</p>
-
-<p><a href="http://www.emacswiki.org/emacs/ExecuteExternalCommand#toc4">Running a Shell Command Asynchronously</a></p>
-
-<p>ここにあるコードで、複数コマンドのサポートが可能になります！あと、わかりやすいように元のコマンドを出力バッファのうえの方に表示してくれます！</p>
-
-<p>わんだほー</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
-      
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/">Emacs + Xcode4.5 iOSアプリ開発設定</a></h1>
+      <h1 class="entry-title">Emacs + Xcode4.5 iOSアプリ開発設定</h1>
     
     
       <p class="meta">
@@ -143,7 +91,7 @@
   </header>
 
 
-  <div class="entry-content"><p>EmacsとXcode4.5でiOSアプリを開発をするための設定です。ウェブ上にEmacs + Xcodeで開発するための設定は色々とあるんですが、Xcode側の変更によってが動作するものが少なかった(特にFlymakeと補完)のでまとめておきたいと思います。実際の開発作業ではXcodeもEmacsと別に起動しておいて、必要に応じて切り替えて使っています。</p>
+<div class="entry-content"><p>EmacsとXcode4.5でiOSアプリを開発をするための設定です。ウェブ上にEmacs + Xcodeで開発するための設定は色々とあるんですが、Xcode側の変更によってが動作するものが少なかった(特にFlymakeと補完)のでまとめておきたいと思います。実際の開発作業ではXcodeもEmacsと別に起動しておいて、必要に応じて切り替えて使っています。</p>
 
 <ul>
 <li>obj-c-modeでソースファイルを開く</li>
@@ -339,68 +287,16 @@
 
 <p>でわー！</p>
 </div>
-  
-  
 
 
-    </article>
-  
-  
-    <article>
+  <footer>
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/26/iphone5/">iPhone5</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
   
 
+<span class="byline author vcard">Posted by <span class="fn">yukihr</span></span>
 
-<time datetime="2012-09-26T17:37:00+09:00" pubdate data-updated="true">Sep 26<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>先日、AppleからiPhone5が発売された。発売初日から多くの人が携帯電話一つのために列をなし、その販売数は3日で500万台を超えるという（もっとも、その数はアナリストの期待以下ではあったようだが）。しかし、素晴らしい製品だという声が多くある一方で、革新性が少なく退屈な端末だという評判もまたよく耳にする。一体どちらの評判が正しいのだろうとこの端末を手にしたことのない人は思うだろう。僕もまたそういう人々の一人だった。実際に端末を手にするまでは。</p>
-
-<p>今、手元にiPhone5がある。手にとってスリープを解除する。4インチの縦長ディスプレイが光を放つ。アプリのアイコンをタップする。直ちに起動したアプリですぐに目的の作業にとりかかる。そして、画面の上を親指でなぞりながらひと通りの作業を終える。僕は確信を持っていうことができる。5の名前を冠せられたこのiPhoneは過去最高のモバイル端末だと。</p>
-
-<p>iPhone5の画面は以前に使っていた3GSの画面よりも縦に親指一本分の横幅ほど長い。そのため、画面の端のボタンをタップするには幾分無理をして親指を伸ばす必要がある。しかしその労力もすぐに慣れる程度のもので、大きくなったディスプレイにはメリットのほうが多いように思う。5の画面に慣れた人なら、以前の3.5インチのディスプレイに物足りなさを覚えるだろう。まさにフィル・シラーがiPhone5発表のプレゼンで強調したとおりだ。</p>
-
-<p>そして、この事実は否が応にも僕にアップルの製品に込められた哲学を思わせる。それは、すべてのことを「人」を基準にして考えるということだ。人の身体と心を徹底的に分析し、製品がうまく調和するまで徹底的にブラッシュアップする。そのスタンスはIT企業と言うよりも家具デザイナーや建築家のそれに近い。家具デザイナーや建築家がそのようなスタンスを持つのは、一言で行ってしまえばそうしないと食べていけないからだ。おしりが痛くなるような椅子は誰も買わないし、屈まないと通れないドアばかりの家だって誰も買わない。彼らの仕事にはいつも、人を基準に考えないと仕事にならないという意識がつきまとっているのだ。</p>
-
-<p>けれど、ITの世界では長らく、一言目にはCPUのスペックやメモリの容量が問題にされてきた。CPUがどれだけ速くなったか、メモリがどれだけ多くなったか、たしかにそれが使用感に直結していた時代もあった。パーソナルコンピュータと言えばWindowsだった時代だ。マイクロソフトはWindows95で直感的に扱える見栄えの良いUIを多くの人々に提供したが、ただ、そこで立ち止まってしまった。一方、アップルは人々が使うべきコンピュータを探求し続け、マルチタッチUIを生み出した。そしていま、多くの人々のコンピュータ体験はマルチタッチスクリーンを起点としたものに移った。もはや、コンピュータの性能はそれだけでは意味をなさなくなってきている。ハードウェアとその上で動くソフトウェア全てで作られるコンピュータ体験を人々は求めているのだ。</p>
-
-<p>アップルがこのような変革を生み出せたのは、もちろんジョブズという一人の天才の手によるところも大きいだろう。しかしiPhone5を体験すると、アップルという企業が最高のコンピュータ体験を今なお志向していることが分かる。それは人を基準に考え、人にとって最適なものを創りだそうという意志の現れだと思う。もちろん、技術の進歩によってiPhoneよりもさらに人にとって適切なコンピュータが生まれる日はきっと来るだろうし、来て欲しいと思う。けれど、アップルの製品が人を基準としたものである限り、僕はアップル製品を使い続けるだろう。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/09/05/photo-blog/">写真日記はじめました</a></h1>
-    
-    
-      <p class="meta">
-        
 
 
 
@@ -412,164 +308,45 @@
   
 
 
-<time datetime="2012-09-05T19:51:00+09:00" pubdate data-updated="true">Sep 5<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>最近、このブログに撮った写真をアップしていたんですが、エントリーが写真で埋まるのもあれだし、独立させたほうが見てもらうにも良いと思ったので写真日記を新しく作りました。</p>
-
-<p><a href="http://yukihr.github.com/photo/">空を視る</a></p>
-
-<p><a href="http://www.petit.cc/">petit</a> という素敵サービスがありまして、ここにアップされる写真をみたり好みの作者さんを探すのが大好きなんです。自分もこういうサイトが作りたい！と思ってたんですが、有料（月525円）なんですよね・・。こういうサイトを作るならGithub Pagesとjekyllを使えば無料だしというDIY精神（貧乏根性ともいう）もありまして、自分で作ることにしました。世の中のほとんどのサイトは静的ページなのでみんなもGithub Pages使うといいと思うよ（無料だし）！</p>
-
-<p>ただ、petitのおすすめに取り上げてもらえなかったり素敵な作者さんとの交流ができなかったりするので、素直にpetit使うのがいい気もします。petitはとても良いサービスだと思うしお勧めです。</p>
-
-<p>まあ、自己満足的な写真日記なんですが楽しんで貰えたら幸いです。</p>
-</div>
-  
-  
-
-
-    </article>
-  
-  
-    <article>
+<time datetime="2012-11-01T17:12:00+09:00" pubdate data-updated="true">Nov 1<span>st</span>, 2012</time>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/16/two-useful-mac-apps/">小回りのきくMac Appの紹介。Window Magnet と Flycut</a></h1>
-    
-    
-      <p class="meta">
-        
 
-
-
-
-
-
-
-
+<span class="categories">
   
+    <a class='category' href='/blog/categories/emacs/'>Emacs</a>, <a class='category' href='/blog/categories/xcode/'>Xcode</a>, <a class='category' href='/blog/categories/ios/'>iOS</a>
+  
+</span>
 
 
-<time datetime="2012-05-16T22:06:00+09:00" pubdate data-updated="true">May 16<span>th</span>, 2012</time>
-        
-      </p>
+    </p>
     
-  </header>
-
-
-  <div class="entry-content"><p>最近お気に入りのMac用Appを紹介します。</p>
-
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/" data-via="" data-counturl="http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/" >Tweet</a>
+  
+  
+  
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/05/16/two-useful-mac-apps/">Read on</a>
-    </footer>
-  
 
-
-    </article>
-  
-  
-    <article>
+    
+    <p class="meta">
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/15/emacs-evil-vilual-line-move-with-jk/">Emacs Evil で物理行移動</a></h1>
-    
-    
-      <p class="meta">
-        
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-15T21:02:00+09:00" pubdate data-updated="true">May 15<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Emacs では、Vimのようなモードによる操作を実現するVimpulseを使っていたんですが、Vimpulse後継のEvilが開発されているのをSoftware Design誌の記事で知り最近乗り換えました。</p>
-
-</div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/05/15/emacs-evil-vilual-line-move-with-jk/">Read on</a>
-    </footer>
-  
-
-
-    </article>
-  
-  
-    <article>
+        <a class="basic-alignment left" href="/blog/2012/09/26/iphone5/" title="Previous Post: iPhone5">&laquo; iPhone5</a>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2012/05/13/dvorak-and-4keyboard-stickers/">Dvorak 配列への乗り換えと、 4keyboard.com のキーボードステッカー</a></h1>
-    
-    
-      <p class="meta">
-        
+      
+        <a class="basic-alignment right" href="/blog/2012/12/15/emacs-multiple-async-command/" title="next Post: Emacsで多数の非同期シェルコマンドを実行する">Emacsで多数の非同期シェルコマンドを実行する &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2012-05-13T01:14:00+09:00" pubdate data-updated="true">May 13<span>th</span>, 2012</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>突然ですが、<a href="http://ja.wikipedia.org/wiki/Dvorak%E9%85%8D%E5%88%97">Dvorak（ドヴォラック）配列</a> というものを聞いたことがあるでしょうか？
-これはコンピューター・キーボードの配列の一種で、1932年に打ちやすさを目指して開発されたものです。</p>
-
-<p><img src="/images/dv.jpg" alt="Dvorak" /></p>
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
 
 </div>
-  
-  
-    <footer>
-      <a rel="full-article" href="/blog/2012/05/13/dvorak-and-4keyboard-stickers/">Read on</a>
-    </footer>
-  
-
-
-    </article>
-  
-  <div class="pagination">
-    
-      <a class="prev" href="/blog/page/2/">&larr; Older</a>
-    
-    <a href="/blog/archives">Blog Archives</a>
-    
-  </div>
-</div>
-
 <aside class="sidebar">
   
     <section>
@@ -602,7 +379,10 @@
       var disqus_shortname = 'yukihr';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/';
+        var disqus_url = 'http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

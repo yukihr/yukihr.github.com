@@ -1,0 +1,1103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[flowery *]]></title>
+  <link href="http://yukihr.github.com/atom.xml" rel="self"/>
+  <link href="http://yukihr.github.com/"/>
+  <updated>2013-01-15T20:56:05+09:00</updated>
+  <id>http://yukihr.github.com/</id>
+  <author>
+    <name><![CDATA[yukihr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emacsで多数の非同期シェルコマンドを実行する]]></title>
+    <link href="http://yukihr.github.com/blog/2012/12/15/emacs-multiple-async-command/"/>
+    <updated>2012-12-15T11:57:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/12/15/emacs-multiple-async-command</id>
+    <content type="html"><![CDATA[<p>Emacsでは<code>M-!</code>でシェルコマンドを実行できるんですが、これで実行したコマンドは同期実行になってしまって、コマンドが終了するまで他の操作ができなくなります。
+時間のかかるコマンドや常にバックグラウンドで走らせておきたいコマンドを実行するには不便です(というか無理)。</p>
+
+<p>実は<code>M-!</code>でシェルでやるようにコマンドの後ろに<code>&amp;</code>をつけてやると、コマンドが非同期実行になり、Emacsのスレッドを停止しなくなるので他のバッファ操作をしながらコマンドを走らせておくことができます。便利ですね。あと、これ<code>M-&amp;</code>でもできます。</p>
+
+<p>ただ、これ、デフォルトの状態だとひとつの非同期コマンドしか実行できないんですよ・・・。Railsでよくあるように、<code>M-&amp; rails server</code>して、<code>M-&amp; guard</code> とかできないんです・・・。
+なんとかならないもんかなあ、とググってたら発見しました。</p>
+
+<p><a href="http://www.emacswiki.org/emacs/ExecuteExternalCommand#toc4">Running a Shell Command Asynchronously</a></p>
+
+<p>ここにあるコードで、複数コマンドのサポートが可能になります！あと、わかりやすいように元のコマンドを出力バッファのうえの方に表示してくれます！</p>
+
+<p>わんだほー</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs + Xcode4.5 iOSアプリ開発設定]]></title>
+    <link href="http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/"/>
+    <updated>2012-11-01T17:12:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings</id>
+    <content type="html"><![CDATA[<p>EmacsとXcode4.5でiOSアプリを開発をするための設定です。ウェブ上にEmacs + Xcodeで開発するための設定は色々とあるんですが、Xcode側の変更によってが動作するものが少なかった(特にFlymakeと補完)のでまとめておきたいと思います。実際の開発作業ではXcodeもEmacsと別に起動しておいて、必要に応じて切り替えて使っています。</p>
+
+<ul>
+<li>obj-c-modeでソースファイルを開く</li>
+</ul>
+
+
+<div><script src='https://gist.github.com/3991026.js?file=ios-auto-mode.el'></script>
+<noscript><pre><code>;; Auto mode
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@implementation&quot; . objc-mode))
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@interface&quot; . objc-mode))
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@protocol&quot; . objc-mode))
+</code></pre></noscript></div>
+
+
+<ul>
+<li>ヘッダと実装ファイルをジャンプする(C-c t)</li>
+</ul>
+
+
+<div><script src='https://gist.github.com/3991026.js?file=ios-jump-header.el'></script>
+<noscript><pre><code>;; Jump between header and impl
+(setq ff-other-file-alist
+     '((&quot;\\.mm?$&quot; (&quot;.h&quot;))
+       (&quot;\\.cc$&quot;  (&quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.hh$&quot;  (&quot;.cc&quot; &quot;.C&quot;))
+
+       (&quot;\\.c$&quot;   (&quot;.h&quot;))
+       (&quot;\\.h$&quot;   (&quot;.c&quot; &quot;.cc&quot; &quot;.C&quot; &quot;.CC&quot; &quot;.cxx&quot; &quot;.cpp&quot; &quot;.m&quot; &quot;.mm&quot;))
+
+       (&quot;\\.C$&quot;   (&quot;.H&quot;  &quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.H$&quot;   (&quot;.C&quot;  &quot;.CC&quot;))
+
+       (&quot;\\.CC$&quot;  (&quot;.HH&quot; &quot;.H&quot;  &quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.HH$&quot;  (&quot;.CC&quot;))
+
+       (&quot;\\.cxx$&quot; (&quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.cpp$&quot; (&quot;.hpp&quot; &quot;.hh&quot; &quot;.h&quot;))
+
+       (&quot;\\.hpp$&quot; (&quot;.cpp&quot; &quot;.c&quot;))))
+
+(add-hook 'objc-mode-hook
+         (lambda ()
+           (define-key c-mode-base-map (kbd &quot;C-c t&quot;) 'ff-find-other-file)
+         ))
+</code></pre></noscript></div>
+
+
+<ul>
+<li>カーソル下の単語または選択範囲をXcodeのオーガナイザで検索する(C-c r)</li>
+</ul>
+
+
+<div><script src='https://gist.github.com/3991026.js?file=ios-search-doc.el'></script>
+<noscript><pre><code>;; Documentation Search
+(defun region-string-or-currnet-word ()
+  &quot;Get region string if region is set, else get current word.&quot;
+  (if mark-active
+      (buffer-substring (region-beginning) (region-end))
+    (current-word)))
+
+(defun xcode:searchdoc ()
+  (interactive)
+  (let ((term (region-string-or-currnet-word)))
+    (do-applescript
+     (format
+      (concat
+       &quot;tell application \&quot;System Events\&quot; \r&quot;
+       &quot;  tell process \&quot;Xcode\&quot; \r&quot;
+                                        ; -- Activate Xcode if necessary
+       &quot;    set frontmost to true \r&quot;
+                                        ;    -- Open the Organizer
+       &quot;    keystroke \&quot;2\&quot; using {shift down, command down} \r&quot;
+       &quot;    set organizer to window 1 \r&quot;
+                                        ;    -- Select the Documentation panel if it's not already selected
+       &quot;    if the title of organizer is not \&quot;Organizer - Documentation\&quot; then \r&quot;
+       &quot;      click button \&quot;Documentation\&quot; of tool bar 1 of organizer \r&quot;
+       &quot;      delay 0.1 \r&quot;
+       &quot;      set organizer to window 1 \r&quot;
+       &quot;    end if \r&quot;
+                                        ;    -- Move focus to the search field
+       &quot;    set searchField to text field 1 of splitter group 1 of organizer \r&quot;
+       &quot;    set searchField's focused to true \r&quot;
+       &quot;    set value of searchField to \&quot;&quot; term &quot;\&quot; \r&quot;
+       &quot;  end tell \r&quot;
+       &quot;end tell \r&quot;
+       )))))
+
+(add-hook 'objc-mode-hook (lambda ()
+  (define-key objc-mode-map (kbd &quot;C-c r&quot;) 'xcode:searchdoc)))
+</code></pre></noscript></div>
+
+
+<ul>
+<li><p>SDKのパス設定</p>
+
+<p>FlymakeとAutocompleteの設定に利用します。</p></li>
+</ul>
+
+
+<div><script src='https://gist.github.com/3991026.js?file=ios-sdk-settings.el'></script>
+<noscript><pre><code>;; SDK Place
+(defvar xcode:sdkver &quot;6.0&quot;)
+(defvar xcode:sdkpath &quot;/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer&quot;)
+(defvar xcode:sdk (concat xcode:sdkpath &quot;/SDKs/iPhoneSimulator&quot; xcode:sdkver &quot;.sdk&quot;))
+</code></pre></noscript></div>
+
+
+<ul>
+<li><p>Autocompleteによる補完設定</p>
+
+<p>別途<a href="https://github.com/brianjcj/auto-complete-clang">auto-complete-clang.el</a>をダウンロードし、elispのインストールディレクトリに置いておきます。</p></li>
+</ul>
+
+
+<div><script src='https://gist.github.com/3991026.js?file=ios-auto-complete.el'></script>
+<noscript><pre><code>;; auto-complete-mode
+(setq ac-modes (append ac-modes '(objc-mode)))
+(add-to-load-path &quot;vendor/auto-complete-clang&quot;) ;; Set your own Path
+(setq ac-clang-flags (list &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot; &quot;-x&quot; &quot;objective-c&quot; &quot;-std=gnu99&quot; &quot;-isysroot&quot; xcode:sdk &quot;-I.&quot; &quot;-F..&quot; &quot;-fblocks&quot;))
+(require 'auto-complete-clang)
+;; (setq ac-clang-prefix-header &quot;stdafx.pch&quot;)
+;; (setq ac-clang-flags '(&quot;-w&quot; &quot;-ferror-limit&quot; &quot;1&quot;))
+;(setq clang-completion-flags (list &quot;-Wall&quot; &quot;-Wextra&quot; &quot;-fsyntax-only&quot; &quot;-ObjC&quot; &quot;-std=c99&quot; &quot;-isysroot&quot; &quot;/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk&quot; &quot;-I.&quot; &quot;-F..&quot; &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot;))
+(add-hook 'objc-mode-hook
+          (lambda () (setq ac-sources (append '(ac-source-clang
+                                                ac-source-yasnippet
+                                                ac-source-gtags)
+                                              ac-sources))))
+</code></pre></noscript></div>
+
+
+<p>  三行目の設定をauto-complete-clang.elを置いたパスで置き換えてください。</p>
+
+<ul>
+<li>Flymake</li>
+</ul>
+
+
+<div><script src='https://gist.github.com/3991026.js?file=ios-flymake.el'></script>
+<noscript><pre><code>;; flymake エラー表示は参考程度に・・・
+(require 'flymake)
+;(defvar flymake-objc-compiler (concat xcode:sdkpath &quot;/usr/bin/gcc&quot;))
+(defvar flymake-objc-compiler (executable-find &quot;clang&quot;))
+;;(defvar flymake-objc-compile-default-options (list &quot;-Wall&quot; &quot;-Wextra&quot; &quot;-fsyntax-only&quot; &quot;-x&quot; &quot;objective-c&quot; &quot;-std=c99&quot;))
+(defvar flymake-objc-compile-default-options (list &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot; &quot;-fsyntax-only&quot; &quot;-fno-color-diagnostics&quot; &quot;-fobjc-arc&quot; &quot;-fblocks&quot; &quot;-Wreturn-type&quot; &quot;-Wparentheses&quot; &quot;-Wswitch&quot; &quot;-Wno-unused-parameter&quot; &quot;-Wunused-variable&quot; &quot;-Wunused-value&quot; &quot;-isysroot&quot; xcode:sdk))
+(defvar flymake-last-position nil)
+(defcustom flymake-objc-compile-options '(&quot;-I.&quot;)
+  &quot;Compile option for objc check.&quot;
+  :group 'flymake
+  :type '(repeat (string)))
+
+(defun flymake-objc-init ()
+ (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                    'flymake-create-temp-inplace))
+        (local-file (file-relative-name
+                     temp-file
+                     (file-name-directory buffer-file-name))))
+   (list flymake-objc-compiler (append flymake-objc-compile-default-options flymake-objc-compile-options (list local-file)))))
+
+(setq flymake-err-line-patterns
+      (cons
+       '(&quot;\\(.+\\):\\([0-9]+\\):\\([0-9]+\\): \\(.+\\)&quot; 1 2 3 4)
+       flymake-err-line-patterns))
+
+(defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+  ;(setq flymake-check-was-interrupted t)
+  ;; dirty hack.... for clang command always exit with status code 1
+  (setq exit-status 0))
+
+(add-hook 'objc-mode-hook
+         (lambda ()
+           (ad-activate 'flymake-post-syntax-check)
+           ;; 拡張子 m と h に対して flymake を有効にする設定 flymake-mode t の前に書く必要があります
+           (push '(&quot;\\.m$&quot; flymake-objc-init) flymake-allowed-file-name-masks)
+           (push '(&quot;\\.h$&quot; flymake-objc-init) flymake-allowed-file-name-masks)
+           (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
+               (flymake-mode t))))
+</code></pre></noscript></div>
+
+
+<p>  26行目からの箇所では、コンパイラのclangがExit Code = 1で終了する（オプションを変更すればExitCode=0で終了させられるかもしれません・・）ことでFlymakeがエラーになってしまうことに対処しています。この設定によってFlymakeがコマンドの異常終了を拾わなくなり、他の言語の設定に影響があるかもしれないので注意してください。</p>
+
+<p>本ページの設定については以下のページを参考にさせていただきました。ありがとうございました！</p>
+
+<ul>
+<li><a href="http://sakito.jp/emacs/emacsobjectivec.html">Emacs で iPhone アプリ開発を快適にするための設定</a></li>
+<li><a href="https://gist.github.com/2500847">Jump to the documentation search field in Xcode 4 using AppleScript.</a></li>
+<li><a href="http://ponpoko1968.hatenablog.com/entry/20101030/1288395400">clangを使ったCのコード補完</a></li>
+<li><a href="http://blog.fenrir-inc.com/us/2012/04/objective-c-in-emacs-check-the-syntax-in-flymake.html">[Objective-C in Emacs] Check the syntax in flymake</a></li>
+<li><a href="http://roupam.github.com/">Emacs for Xcode+ios Development</a></li>
+</ul>
+
+
+<p>でわー！</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[iPhone5]]></title>
+    <link href="http://yukihr.github.com/blog/2012/09/26/iphone5/"/>
+    <updated>2012-09-26T17:37:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/09/26/iphone5</id>
+    <content type="html"><![CDATA[<p>先日、AppleからiPhone5が発売された。発売初日から多くの人が携帯電話一つのために列をなし、その販売数は3日で500万台を超えるという（もっとも、その数はアナリストの期待以下ではあったようだが）。しかし、素晴らしい製品だという声が多くある一方で、革新性が少なく退屈な端末だという評判もまたよく耳にする。一体どちらの評判が正しいのだろうとこの端末を手にしたことのない人は思うだろう。僕もまたそういう人々の一人だった。実際に端末を手にするまでは。</p>
+
+<p>今、手元にiPhone5がある。手にとってスリープを解除する。4インチの縦長ディスプレイが光を放つ。アプリのアイコンをタップする。直ちに起動したアプリですぐに目的の作業にとりかかる。そして、画面の上を親指でなぞりながらひと通りの作業を終える。僕は確信を持っていうことができる。5の名前を冠せられたこのiPhoneは過去最高のモバイル端末だと。</p>
+
+<p>iPhone5の画面は以前に使っていた3GSの画面よりも縦に親指一本分の横幅ほど長い。そのため、画面の端のボタンをタップするには幾分無理をして親指を伸ばす必要がある。しかしその労力もすぐに慣れる程度のもので、大きくなったディスプレイにはメリットのほうが多いように思う。5の画面に慣れた人なら、以前の3.5インチのディスプレイに物足りなさを覚えるだろう。まさにフィル・シラーがiPhone5発表のプレゼンで強調したとおりだ。</p>
+
+<p>そして、この事実は否が応にも僕にアップルの製品に込められた哲学を思わせる。それは、すべてのことを「人」を基準にして考えるということだ。人の身体と心を徹底的に分析し、製品がうまく調和するまで徹底的にブラッシュアップする。そのスタンスはIT企業と言うよりも家具デザイナーや建築家のそれに近い。家具デザイナーや建築家がそのようなスタンスを持つのは、一言で行ってしまえばそうしないと食べていけないからだ。おしりが痛くなるような椅子は誰も買わないし、屈まないと通れないドアばかりの家だって誰も買わない。彼らの仕事にはいつも、人を基準に考えないと仕事にならないという意識がつきまとっているのだ。</p>
+
+<p>けれど、ITの世界では長らく、一言目にはCPUのスペックやメモリの容量が問題にされてきた。CPUがどれだけ速くなったか、メモリがどれだけ多くなったか、たしかにそれが使用感に直結していた時代もあった。パーソナルコンピュータと言えばWindowsだった時代だ。マイクロソフトはWindows95で直感的に扱える見栄えの良いUIを多くの人々に提供したが、ただ、そこで立ち止まってしまった。一方、アップルは人々が使うべきコンピュータを探求し続け、マルチタッチUIを生み出した。そしていま、多くの人々のコンピュータ体験はマルチタッチスクリーンを起点としたものに移った。もはや、コンピュータの性能はそれだけでは意味をなさなくなってきている。ハードウェアとその上で動くソフトウェア全てで作られるコンピュータ体験を人々は求めているのだ。</p>
+
+<p>アップルがこのような変革を生み出せたのは、もちろんジョブズという一人の天才の手によるところも大きいだろう。しかしiPhone5を体験すると、アップルという企業が最高のコンピュータ体験を今なお志向していることが分かる。それは人を基準に考え、人にとって最適なものを創りだそうという意志の現れだと思う。もちろん、技術の進歩によってiPhoneよりもさらに人にとって適切なコンピュータが生まれる日はきっと来るだろうし、来て欲しいと思う。けれど、アップルの製品が人を基準としたものである限り、僕はアップル製品を使い続けるだろう。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[写真日記はじめました]]></title>
+    <link href="http://yukihr.github.com/blog/2012/09/05/photo-blog/"/>
+    <updated>2012-09-05T19:51:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/09/05/photo-blog</id>
+    <content type="html"><![CDATA[<p>最近、このブログに撮った写真をアップしていたんですが、エントリーが写真で埋まるのもあれだし、独立させたほうが見てもらうにも良いと思ったので写真日記を新しく作りました。</p>
+
+<p><a href="http://yukihr.github.com/photo/">空を視る</a></p>
+
+<p><a href="http://www.petit.cc/">petit</a> という素敵サービスがありまして、ここにアップされる写真をみたり好みの作者さんを探すのが大好きなんです。自分もこういうサイトが作りたい！と思ってたんですが、有料（月525円）なんですよね・・。こういうサイトを作るならGithub Pagesとjekyllを使えば無料だしというDIY精神（貧乏根性ともいう）もありまして、自分で作ることにしました。世の中のほとんどのサイトは静的ページなのでみんなもGithub Pages使うといいと思うよ（無料だし）！</p>
+
+<p>ただ、petitのおすすめに取り上げてもらえなかったり素敵な作者さんとの交流ができなかったりするので、素直にpetit使うのがいい気もします。petitはとても良いサービスだと思うしお勧めです。</p>
+
+<p>まあ、自己満足的な写真日記なんですが楽しんで貰えたら幸いです。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[小回りのきくMac Appの紹介。Window Magnet と Flycut]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/16/two-useful-mac-apps/"/>
+    <updated>2012-05-16T22:06:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/16/two-useful-mac-apps</id>
+    <content type="html"><![CDATA[<p>最近お気に入りのMac用Appを紹介します。</p>
+
+<!-- more -->
+
+
+<h2>Window Magnet</h2>
+
+<p><a href="http://itunes.apple.com/jp/app/window-magnet/id441258766?l=en&amp;mt=12">Mac App Store - Window Magnet</a></p>
+
+<p><img src="http://yukihr.github.com/images/window-magnet.png" alt="Window Magnet" /></p>
+
+<p>Windows7のウィンドウは画面の端に持って行くと自動的にサイズを調整してくれるんですが、これがかなり便利でMacにも同じような機能があったらなー、と思ってたんですが、探すといくつか同様の機能を持ったアプリがありました。
+そのなかでも一番使い心地の良かったのがこのWindowMagnetです。</p>
+
+<p>体験版がないので購入に躊躇してしまうかもですが、とても自然な操作感で機能も豊富です。これで85円は買いだと思います。</p>
+
+<h2>Flycut</h2>
+
+<p><a href="http://itunes.apple.com/jp/app/flycut-clipboard-manager/id442160987?l=en&amp;mt=12">Mac App Store - Flycut</a></p>
+
+<p><img src="http://yukihr.github.com/images/flycut.png" alt="Flycut" /></p>
+
+<p>シンプルなクリップボードマネージャです。
+コピーしたテキストの履歴にメニューバーアイコンからアクセスできます。</p>
+
+<p>こちらは無料なので是非。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Evil で物理行移動]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/15/emacs-evil-vilual-line-move-with-jk/"/>
+    <updated>2012-05-15T21:02:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/15/emacs-evil-vilual-line-move-with-jk</id>
+    <content type="html"><![CDATA[<p>Emacs では、Vimのようなモードによる操作を実現するVimpulseを使っていたんですが、Vimpulse後継のEvilが開発されているのをSoftware Design誌の記事で知り最近乗り換えました。</p>
+
+<!-- more -->
+
+
+<p>Evilではデフォルトでjkでの移動が論理行移動に設定されています。これを物理行移動にする設定が用意されてないのかなー、とソースを探索していたところ <code>evil-next-visual-line</code>, <code>evil-previous-visual-line</code> というコマンドが定義されているのを見つけました。これらはデフォルトでは、<code>gj</code>, <code>gk</code>のキーに設定されています。これを <code>j</code>, <code>k</code>に設定するには以下のようにします。</p>
+
+<div><script src='https://gist.github.com/2701180.js'></script>
+<noscript><pre><code>(define-key 'evil-motion-state-map &quot;j&quot; evil-next-visual-line)
+(define-key 'evil-motion-state-map &quot;k&quot; evil-previous-visual-line)
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Dvorak 配列への乗り換えと、 4keyboard.com のキーボードステッカー]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/13/dvorak-and-4keyboard-stickers/"/>
+    <updated>2012-05-13T01:14:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/13/dvorak-and-4keyboard-stickers</id>
+    <content type="html"><![CDATA[<p>突然ですが、<a href="http://ja.wikipedia.org/wiki/Dvorak%E9%85%8D%E5%88%97">Dvorak（ドヴォラック）配列</a> というものを聞いたことがあるでしょうか？
+これはコンピューター・キーボードの配列の一種で、1932年に打ちやすさを目指して開発されたものです。</p>
+
+<p><img src="http://yukihr.github.com/images/dv.jpg" alt="Dvorak" /></p>
+
+<!-- more -->
+
+
+<p>多く出回っているコンピューターのキーボードはQWERTYという配列ですが、この配列は発明当時のタイプライターのアームの干渉を防ぐようにわざと打ちにくいものにしたという説もあり、打ちやすさを目指して開発された配列ではないんですね。
+iPadやiPhoneによるマルチタッチUIがコンピュータ操作にとって一般的になろうかという昨今ですが、キーボードというのはプログラマのみならずコンピュータ上で仕事や創作をする人にはまだまだ最も使用頻度の高い入力インターフェイスであると言えると思います。
+そのように重要なキーボードという入力インターフェイスはできるだけ打ちやすい物であって欲しい、というのが人情ではないでしょうか？
+Dvorak配列は打ちやすさの為に設計された配列です。打ちやすさとは具体的には下のような設計指針によるものです。</p>
+
+<ul>
+<li>AOEUI の母音を左手のホームポジションに置き、母音との組み合わせで使うことの多い子音を右手の置くことで、右・左とリズムよく打鍵できることが多い。</li>
+</ul>
+
+
+<p>この設計指針のおかげで指の移動距離が短くでき腱鞘炎の予防にも役立つといわれています。
+ただ、通常のDvorakは英文入力のために最適化されているため、プログラミングや日本語入力のためには必ずしも最適ではないです。
+そのため、Dvorak配列から派生して特定の入力用のDvorak（Programmer Dvorak や DvorakJP など）が開発されているようです。
+とはいえ、通常のDvorakもプログラミングや日本語入力で効率が上がることは確かですので、Dvorakに十分慣れてからさらに特定分野向けの配列に挑戦してもいいでしょう。</p>
+
+<p><img src="http://yukihr.github.com/images/dv-keys.jpg" alt="取り外されたキートップ・・・" /></p>
+
+<p>私も３ヶ月ほど前から通常のDvorakに移行していてやっと慣れてきたというところですが、確かに以前に比べて手が疲れなくなったという印象です。
+仕事で一日キーボードを打っていると帰宅する頃には手の節々が少なからず痛んでいたのですが、その痛みが軽くなりました。
+入力効率という点でも若干ですが上がったような気がします。
+ただ、移行にはQWERTYのタッチタイピングを覚えるときくらいの苦労が伴いますので、これからもずっとキーボードをたたき続けるというような人でないと移行のモチベーションは湧きにくいと思います。
+逆にプログラマーや文筆業の方など、これからもキーボードを使って仕事をするのがほぼ確定しているような方達は乗り換えて損はしないでしょう。
+実際、ギーク指向のプログラマーはDvorakを使っている方が多い気がします。</p>
+
+<p>各OSでDvorakに切り替える方法は以下のようになります。</p>
+
+<ul>
+<li><p>Mac OSX 10.7
+: 「システム環境設定」 -> 「言語とテキスト」-> 「入力ソース」-> 左のリストからDvorakを選択（Dvorak - Qwerty ⌘ とあるのは、⌘キーを押した時だけQwertyに戻るというもので、キーボードショートカットを今までのまま使用したい人には便利です。）</p></li>
+<li><p>Linux
+: ディストリビューションやウィンドウマネージャによって異なりますが、GUIの設定が用意されていることが多いと思います。ttyコンソールでも変更したい場合はググってください＞＜</p></li>
+<li><p>Windows 7
+: 日本語入力と併用するためにはレジストリの変更が必要になります。詳しくはググっ（ry</p></li>
+</ul>
+
+
+<p>で、このQWERTYからDvorakへの乗り換えに役立つのが、<a href="http://www.4keyboard.com">4keyboard.com</a>のキーボードステッカーです。</p>
+
+<p><img src="http://yukihr.github.com/images/dv-stickers.jpg" alt="ステッカー" /></p>
+
+<p>Dvorak 移行中にも急を要する仕事はどうしても発生しますし、そんな時にキー入力にもたつくのはイライラします。
+このステッカーであれば、Qwerty配列のラベルも見ることができるので急ぎの用事の時だけQwertyに戻すということも簡単です
+また、キートップを入れ替えないので、タッチタイプに必須のホームポジションを識別するための凸（あれに名前はあるんだろうか・・）もそのまま利用できます。
+ステッカーは一枚約300円から、送料も数百円とお手頃です。ただ、カナダからの発送なので届くのに１ヶ月ほど要しました（さすがに２週間過ぎた頃くらいからちょっと不安にはなりました・・）。</p>
+
+<p>今回購入したのは以下の物になります。</p>
+
+<ul>
+<li><a href="http://www.4keyboard.com/apple-dvorak-transparent-keyboard-stickers-p-659.html">Apple Dvorak Transparent keyboard stickers</a></li>
+<li><a href="http://www.4keyboard.com/learning-dvorak-keyboard-sticker-p-413.html">Learning Dvorak keyboard sticker</a></li>
+<li><a href="http://www.4keyboard.com/dvorak-simplified-transparent-keyboard-sticker-p-197.html">Dvorak Simplified transparent keyboard sticker</a></li>
+</ul>
+
+
+<p>ステッカーは手作り感満載ですが耐久性に問題はなく、２ヶ月ほどの使用でも特に問題は出ていません。
+特に、<a href="http://www.4keyboard.com/apple-dvorak-transparent-keyboard-stickers-p-659.html">Apple Dvorak Transparent keyboard stickers</a> は仕上げがよくApple製キーボードとの相性もとてもいいのでMacの方にはおすすめです。</p>
+
+<p><img src="http://yukihr.github.com/images/dv-mac.jpg" alt="Apple" /></p>
+
+<p>職場のキーボードにも・・</p>
+
+<p><img src="http://yukihr.github.com/images/dv-tp.jpg" alt="Tinkpad" /></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ブログ名と写真を変更しました]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/12/new-name-and-bgphoto/"/>
+    <updated>2012-05-12T03:54:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/12/new-name-and-bgphoto</id>
+    <content type="html"><![CDATA[<p>ブログ名と写真を変更しました。code * という名前は適当に決めたものだったので、ちょっとしたら変えようと思ってたのと、コードに関すること以外にもポストを書きたいと思っているのと写真が花のものが多いのでfloweryにしました。</p>
+
+<!-- more -->
+
+
+<p>あとは、花を咲かせるようにブログをかけたらいいなあとか、そんな願いも込めているとかいないとか。* は単にかわいいので付けています。</p>
+
+<p>写真は実家に帰省したとき、あまりにもお天気が良い五月晴れの日に撮ったタンポポとキリギリス（多分）の幼生です。見てるだけでホンワカしてきます。iPhone3GSで撮って、Tilt Shift Generator で加工したものなんですが割とよく撮れてると思います（カメラとアプリの性能の話）。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Smashing Magazine に Douglas Crockford 氏のインタビュー]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine/"/>
+    <updated>2012-05-09T20:26:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine</id>
+    <content type="html"><![CDATA[<p>Web 開発に有益な情報を提供してくれる<a href="http://www.smashingmagazine.com/">Smashing Magazine</a>に、米Yahoo!開発者のDouglas Crockford氏のインタビューが載っています。</p>
+
+<!-- more -->
+
+
+<p><a href="http://coding.smashingmagazine.com/2012/04/27/yahoos-doug-crockford-on-javascript/">How I Work: Yahoo!’s Doug Crockford On JavaScript</a></p>
+
+<p>Douglas Crockford 氏といえば、<a href="http://www.amazon.co.jp/gp/product/4873113911/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=yukihr-22&amp;linkCode=as2&amp;camp=247&amp;creative=1211&amp;creativeASIN=4873113911">JavaScript: The Good Parts</a> の著者であり、JSONの発見者でもあり、JavaScript開発者であれば知らない人はいないというほどの有名開発者ですが、氏がモノづくりをする上での考え方や習慣について語っているようです。</p>
+
+<p>質問内容についていくつか引用してみます。</p>
+
+<ul>
+<li><p>WHY DO YOU FEEL PROGRAMMERS SHOULD STUDY THE HISTORY OF COMPUTER SCIENCE?</p>
+
+<blockquote><p>プログラマがコンピュータ科学の歴史について学ぶべきだと思うのはなぜですか？</p></blockquote></li>
+<li><p>WHAT WERE THE TRAITS OF THE WEAK PROGRAMMERS YOU’VE SEEN OVER YOUR CAREER?</p>
+
+<blockquote><p>あなたが見てきた中で、弱さを持つプログラマの特徴とはなんでしょうか？</p></blockquote></li>
+<li><p>IN <a href="http://www.codersatwork.com/">CODERS AT WORK</a>, YOU STRESS THE IMPORTANCE OF DOING CODE READINGS WITH TEAMS. WHY DO YOU FEEL IT’S IMPORTANT TO PRESENT YOUR CODE IN FRONT OF OTHER PEOPLE?</p>
+
+<blockquote><p><a href="http://www.amazon.co.jp/gp/product/4274068471/ref=as_li_ss_tl?ie=UTF8&amp;tag=yukihr-22&amp;linkCode=as2&amp;camp=247&amp;creative=7399&amp;creativeASIN=4274068471">Coders at Work</a>の中で、チームでコードリーディングすることの重要性について強調していますが、コードを他人に見せるのが重要だと思う理由はなんでしょうか？</p></blockquote></li>
+<li><p>ARE PROGRAMMERS GETTING BETTER AT USER EMPATHY?</p>
+
+<blockquote><p>ユーザーに共感するという点で、プログラマーの考えはよくなっていますか？</p></blockquote></li>
+<li><p>WHAT APPROACHES WOULD YOU SAY A MASTER HAS VERSUS A BEGINNER?</p>
+
+<blockquote><p>名人として、ビギナーと違うアプローチを持つとしたらなんでしょうか？</p></blockquote></li>
+<li><p>WHAT ARE YOUR THOUGHTS ON JQUERY? SOME JS ENTHUSIASTS FEEL LIKE IT’S LETTING PEOPLE OFF THE HOOK FROM TRULY LEARNING JS.</p>
+
+<blockquote><p>jQuery についてどう思いますか？JavaScriptの支持者の中にはjQueryが本来のJSを学ぶことから人々を遠ざけていると考える人もいますが。</p></blockquote></li>
+<li><p>WHEN YOU WERE DEVELOPING JSON WAS IT TOUGH TO PULL BACK AND NOT PUT TOO MUCH INTO IT?</p>
+
+<blockquote><p>JSONを開発する際に、一歩引いて多くを詰め込みすぎないようにするのは大変でしたか？</p></blockquote></li>
+<li><p>HOW DID JSON GET ADOPTED?</p>
+
+<blockquote><p>JSONはどのようにして人々に受け入れられたのでしょうか？</p></blockquote></li>
+</ul>
+
+
+<p>いくつかと言いながらほとんどの質問を引用してしまいましたが、興味深い質問が多いと思いますので興味の有る方はぜひ原文に当たってみてください。
+質問の答えから、人間味あふれるダグ先生の人柄が垣間見えます:-)
+Smashing Magazine では、How I Work というシリーズでこれからウェブ開発者のインタビューを掲載するとの事ですので楽しみです。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Node.js のリファレンスをコマンドラインから検索するツールを作ってみた]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/06/search-node-reference-on-command-line/"/>
+    <updated>2012-05-06T21:38:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/06/search-node-reference-on-command-line</id>
+    <content type="html"><![CDATA[<p>ruby には ri や refe, bitclust (<a href="http://www.ruby-lang.org/ja/documentation/">http://www.ruby-lang.org/ja/documentation/</a> からダウンロードできます) という便利なツールがあり、コマンドラインからリファレンスを引くことが簡単にできます。コマンドラインツールとして実装されているため、EmacsやVimなどのエディタと組み合わせるのも容易で、例えば、カーソル下のメソッドのリファレンスを瞬時に検索して表示するなんていうことが簡単にできまして、プログラミングをする上では非常に助けになります。</p>
+
+<p>そういうツールのNode.js用の物が欲しかったので、週末ハックということで作ってみました。 <a href="https://github.com/yukihr/nore">yukihr/nore</a> になります。</p>
+
+<!-- more -->
+
+
+<p>添付のelisp (misc/nore.el) を使うと、下のような感じでEmacsからNode.jsのリファレンスを引けるようになります（npmに登録してないので、インストールがちょっと面倒ですが・・・）。</p>
+
+<p><img src="http://yukihr.github.com/images/nore-emacs.png" alt="nore-emacs" /></p>
+
+<p>Node.js のリファレンス自体HTML１ページに収まってしまうので、インデックスをつくるなど仕組みとしてはちょっと大げさかもしれません。あと、今のところ完全一致検索にしか対応してないので手でクエリを入力しての検索は頼りにならないかも、とか、HTMLの出力がいい加減で読みづらい、とか、日本語にしか対応してないとか有るんですが、後々何とかするかもしれません（適当ですみません・・）。</p>
+
+<p>良かったら使ってみてください。</p>
+
+<p>追記）</p>
+
+<p>これを作っていて、インストールしているnpmモジュール全部のドキュメント、例えば、doc/ 以下にあるMarkdown形式のドキュメントを一括して検索できるツールがあってもいいのかなー、なんて思いました。まあ、npm docsコマンドでもリファレンスのURLをブラウザで開けるのでそれだけで事足りるし、検索しなくても全体を把握できるような小さなモジュールを組み合わせるのがいわゆるNode (npm)らしさなのかもしれません（個人的に、こういう生態系ができたのはJSがクラスベースでなくプロトタイプベースであることが影響しているんじゃないかと思ってますが）。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs のモードラインをいい感じにした]]></title>
+    <link href="http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline/"/>
+    <updated>2012-04-27T01:02:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline</id>
+    <content type="html"><![CDATA[<p>Emacs のモードラインをいい感じにしました。こんな感じ。</p>
+
+<p><img src="http://yukihr.github.com/images/emacs_modeline_after.png" alt="新しいモードライン" /></p>
+
+<!-- more -->
+
+
+<p>ちなみにいい感じにする前のモードラインはこんな感じです。</p>
+
+<p><img src="http://yukihr.github.com/images/emacs_modeline_before.png" alt="前のモードライン" /></p>
+
+<p>標準のモードラインが良くないってわけじゃないんですけど、3Dのごつごつし
+た感じとか暗号の羅列のようなUIはもうちょっと何とかならないんかなーと思っ
+てたんですが、簡単でしたね。<strong>自分でカスタマイズすればいい</strong>んですよ。
+さすがはEmacs様でしてそこはカスタマイズのためのインターフェイス（？）をちゃ
+んと用意してくれているのですよ。しかもかなり柔軟に見た目を制御できるん
+ですな！でもまあ、このカスタムの仕方がなかなか難しいんですよね。でー、
+ググッていたらよさそうなカスタマイズをハケーンして、それを参考（という
+かほとんどコピぺ）させてもらったという次第です。</p>
+
+<p>こちらのサイト様を参考にさせていただきました m(_ _)m</p>
+
+<p><a href="http://amitp.blogspot.jp/2011/08/emacs-custom-mode-line.html">Emacs: custom mode line - From Amit’s Thoughts</a></p>
+
+<p>このサイトの設定の何がいいかというと、それは</p>
+
+<ul>
+<li>編集を邪魔しない存在感</li>
+<li>必要最低限の情報。でも、出すべきものはちゃんと出している</li>
+<li>重要な情報はちゃんと視認性がよくなっている</li>
+</ul>
+
+
+<p>そんな的を射た設定に大変感銘を受けたのであります。</p>
+
+<p>しかし、まあ日本人としとは文字コード表示が削られているのとか抵抗があるので、諸々調整しました。
+以下のような部分です。</p>
+
+<ul>
+<li>文字コードなどの情報（後々もっと見やすくしたいなー。 &#8220;utf-8&#8221; とかちゃんと全部表示したい）</li>
+<li>nyan-mode はいいや・・</li>
+<li>行数の表示は 現在の行/全体の行 のフォーマットで</li>
+<li>evil のモードインジケータも表示したいな</li>
+<li>あとはフォントサイズや色を自分好みに</li>
+</ul>
+
+
+<p>・・・ってことで。</p>
+
+<p><a href="https://github.com/yukihr/dotfiles/blob/master/.emacs.d/inits/07_modeline.el">設定部分のソースはココ</a></p>
+
+<p>正直 Vim の powerline がかっこ良くて羨ましくて Vim に乗り換えるか・・
+(<a href="http://www.emacswiki.org/emacs/PowerLine">Emacsでもpowerline</a>あるみたいなんですけど、自環境でうまく動かず・・)とか思ってたんですがここまで出来れば私はもう満足です。</p>
+
+<p>（追記
+後々カスタム方法をまとめたポストも書きたいと思っています（自分用メモでもある＞＜）。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs Lisp でオブジェクト指向]]></title>
+    <link href="http://yukihr.github.com/blog/2012/04/14/emacs-lisp-oop/"/>
+    <updated>2012-04-14T02:05:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/04/14/emacs-lisp-oop</id>
+    <content type="html"><![CDATA[<p>Elisp でオブジェクト指向プログラミング（OOP）を実現する方法について調べためも。
+ある程度の量のコードを書くならやはり慣れたOOPが便利ということで。</p>
+
+<!-- more -->
+
+
+<h2>基本</h2>
+
+<ul>
+<li><p><a href="http://www.asahi-net.or.jp/~kc7k-nd/onlispjhtml/objectOrientedLisp.html">On Lisp - オブジェクト指向Lisp</a></p>
+
+<ul>
+<li>素のLisp(Common Lisp)でもOOPできるよ(ELispでも同じように出来るかどうかは確かめてないです・・)。</li>
+<li><a href="http://ja.wikipedia.org/wiki/Common_Lisp_Object_System">CLOS</a>っていう規格でlispでも柔軟なOOPできるよ。</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>ライブラリ</h2>
+
+<ul>
+<li><p>クラスベースのOOPには <a href="http://cedet.sourceforge.net/eieio.shtml">EIEIO</a></p>
+
+<ul>
+<li>CLOS のサブセットを提供するもの</li>
+</ul>
+</li>
+<li><p>プロトタイプベースのOOPには  <a href="http://www.mail-archive.com/gnu-emacs-sources@gnu.org/msg01190.html">eon.el</a></p>
+
+<ul>
+<li>あまり使用例がなさそう(http://d.hatena.ne.jp/rubikitch/20070922/eon)</li>
+</ul>
+</li>
+</ul>
+
+
+<h2>余談</h2>
+
+<p>調べてたときに見つけた <a href="http://sumim.no-ip.com:8080/wiki/748">あるOOPLな会話</a> がおもしろかたー</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Warp - EmacsからリアルタイムにHTMLやmarkdownをブラウザプレビュー]]></title>
+    <link href="http://yukihr.github.com/blog/2012/04/07/realtime-html-preview-with-emacs/"/>
+    <updated>2012-04-07T14:26:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/04/07/realtime-html-preview-with-emacs</id>
+    <content type="html"><![CDATA[<p>EmacsでMarkdownやHTMLをリアルタイムでプレビューしながら編集できるWarp
+というのを作ったのでご紹介〜。</p>
+
+<!-- more -->
+
+
+<p><a href="https://github.com/yukihr/Warp">Github - yukihr/Warp</a></p>
+
+<p>HTMLはともかくMarkdownなどのHTMLにコンバートできるフォーマットのプレ
+ビューって割と需要がある気がします。今までもウェブベースで動くものとか
+ネイティブアプリでプレビューの機能があるものはあったんですが、Emacsで
+evilを使ってviキーバインドを使っているような<del>変態</del>こだわりの強
+い自分はなかなかそういうものを使う気になれませんでした。やっぱり編集
+作業はEmacsでやりたいんです・・・。</p>
+
+<p>そこで作ったのがこれ、というわけでは実はなくて、発端はウェブアプリの開
+発中にブラウザのリロードがめんどくさいなーと思ったのがきっかけです。で、
+ウェブソケットサーバとクライアントを立ち上げておいてクライアントにサー
+バを通してEmacsからリロード命令を送れば一切ブラウザに触らずにリロードで
+きるんじゃ・・、と思って検証用にコードを書いてたらいつの間にかリアルタ
+イムプレビュー用のマイナーモードになってました！どうしてこ（ｒｙ ・・・
+まあ、オートリロード用のマイナーモードも書いてるんですがこちらのほうが
+需要がありそうだったので。</p>
+
+<p>今のところ、Emacs23.3 と Chrome の最新版で動作を確認してます。</p>
+
+<h2>インストール</h2>
+
+<p>ウェブソケットを通してクライアント（ウェブページ）に命令を送るんですが、
+Emacsで動くウェブソケットサーバを書くのはスキル的にも時間的にも無理ぽな
+ので(そのうち誰かやりそうだけど)Node.jsで動くサーバに中継してもらいます。
+なので、動作にはNode.jsが必要です（0.6.11と0.7.2でしか動作確認できてな
+いですが多分最近のものであれば動くはず）。個人的には
+<a href="https://github.com/isaacs/nave">nave</a>を使ってインストールするのが簡単
+でバージョン管理もできるのでよさげです。</p>
+
+<p>Node.js がインストールできたらWarpのリポジトリをローカルにクローンしま
+す。ファイルをダウンロードして展開でもよいです。以下、/path/to/.. は実
+際のものに置き換えてください。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd /path/to/your/repos
+</span><span class='line'>$ git clone https://github.com/yukihr/Warp.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ローカルにファイルを置いたら、npmモジュールであるところのwebsocketをイ
+ンストール。<a href="http://npmjs.org/">npm</a> が必要なのでインストールしておいて
+ください。npmがインストールできたら、package.jsonにインストール設定があ
+るので、以下のようにします。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd warp
+</span><span class='line'>$ npm install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>~/.emacs.d/init.el などの設定ファイルには以下のように書いておきます。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;/path/to/warp-directory&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;warp</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; キーバインドは適当に</span>
+</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c C-w C-w&quot;</span><span class="p">)</span> <span class="nv">warp-mode</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; Markdown を変換する場合</span>
+</span><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;warp-format-converter-alist</span>
+</span><span class='line'>             <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;\\.md\\|\\.markdown&quot;</span> <span class="no">t</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span>
+</span><span class='line'>                                         <span class="c1">;; 使っているコマンドを指定</span>
+</span><span class='line'>                                         <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;markdown&quot;</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以上でインストールはおしまいです。お疲れ様でした〜。</p>
+
+<h2>使い方</h2>
+
+<p>プレビューを見たいバッファで <code>M-x warp-mode</code> （または設定したキーバイン
+ド）、と。これだけ。初期設定で自動的にクライアントが立ち上がってプレ
+ビューが始まります。markdownがインストール済みであれば試しにWarpの
+README.mdを開いて <code>M-x warp-mode</code> してみてください。</p>
+
+<p>デフォルトで warp-mode で使えるコマンドについては以下のようになります。</p>
+
+<ul>
+<li><p>warp-start-server</p>
+
+<p>サーバを起動します (<code>C-c C-w s</code>)</p></li>
+<li><p>warp-stop-server</p>
+
+<p>サーバを停止します (<code>C-c C-w i</code>)</p></li>
+<li><p>warp-open-client</p>
+
+<p>新しくクライアントを開きます (<code>C-c C-w o</code>)</p></li>
+<li><p>warp-send-current-buffer</p>
+
+<p>カレントバッファをコンバートしつつクライアントに転送します (<code>C-c C-w w</code>)</p></li>
+</ul>
+
+
+<h2>設定</h2>
+
+<h3>自動機能を無効に</h3>
+
+<p>初期設定ではWarpは自動でクライアントを立ち上げたりバッファを転送した
+りしてくれるんですが、そこまでやらなくてもいいよって方は以下のように設
+定すると良いかと。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">custom-set-variables</span>
+</span><span class='line'> <span class="o">&#39;</span><span class="p">(</span><span class="nv">warp-auto-start-sending</span> <span class="no">nil</span><span class="p">)</span>      <span class="c1">; 自動転送を無効に</span>
+</span><span class='line'> <span class="o">&#39;</span><span class="p">(</span><span class="nv">warp-auto-open-client</span> <span class="no">nil</span><span class="p">)</span>        <span class="c1">; クライアントの自動起動を無効に</span>
+</span><span class='line'> <span class="o">&#39;</span><span class="p">(</span><span class="nv">warp-auto-start-auto-scroll</span> <span class="no">nil</span><span class="p">))</span> <span class="c1">; 自動スクロールを無効に</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Markdown, HTML 以外のフォーマット</h3>
+
+<p>Warp は原理的にはシェルコマンドを使ってHTMLに変換できるフォーマットであ
+ればすべてのものに対応してます。このあたりの設定についてはflymakeを参考
+にさせてもらいました。例えばtextileをredclothでコンバートするための設定
+は以下のようになります（redclothのインストールが必要です）。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;warp-format-converter-alist</span>
+</span><span class='line'>             <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;\\.textile&quot;</span> <span class="no">t</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;redcloth&quot;</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>※ 自分の環境だと以下の記述がないとエラーがでました。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">setenv</span> <span class="s">&quot;LC_ALL&quot;</span> <span class="s">&quot;en_US.UTF-8&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>warp-format-converter-alist</code> に設定しているリストが設定情報になります。
+設定情報の各要素は次のようになります。</p>
+
+<ol>
+<li><p>変換を行うファイル名、または正規表現</p></li>
+<li><p>カレントバッファの内容をコマンドの標準入力に送るかどうか。送るなら
+<code>t</code> 、送らないなら <code>nil</code></p></li>
+<li><p>コマンドをリスト形式で返す<em>関数</em>。リストではなくて関数であることに注
+意。関数とすることで一時ファイル名などの設定ができ、より柔軟な設定が可
+能です。</p></li>
+</ol>
+
+
+<h2>というわけで</h2>
+
+<p>Warpの紹介でした。個人的にはElispでまとまった量のコードを書くのは初め
+てだったんですが、いろいろなソースコードを拝見しながら慣れていきました。
+Elisp開発者の方々に多謝です。</p>
+
+<p>あと、ウェブページとエディタがウェブソケットで通信することでいろいろな
+ことができそうだなー、と思いました。ウェブソケットサーバを立てるのも
+Node.jsなら簡単だし。
+<a href="http://e-arrows.sakura.ne.jp/2011/06/connect-to-nodejs-and-chrome-from-emacs.html">swank.js</a>
+とか究極的かもですね。</p>
+
+<p>ではでは、Happy Editing!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[新しいデザイン]]></title>
+    <link href="http://yukihr.github.com/blog/2012/03/12/new-design/"/>
+    <updated>2012-03-12T21:07:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/03/12/new-design</id>
+    <content type="html"><![CDATA[<p>デザインを新しくしました。このブログの話。もうすぐ春ということで春らし
+い感じ、というかまんま桜です。ちょっとかわいらし過ぎますかね？でもいい
+です、だってかわいいのが好きなんだもの！・・・はしゃぎすぎました。</p>
+
+<!-- more -->
+
+
+<p>背景の写真は代々木公園の桜です。確か一昨年
+<a href="http://www.flickr.com/photos/21840653@N02/4487139550/">撮った物</a>。自分
+では割と気に入ってiPhoneの壁紙なんかにしているやつです。この写真を撮る
+までは桜の撮り方っていまいちわからなかったんですね。いわゆる桜の写真っ
+て桜のある風景とか、花吹雪とか、自分の中でこういう物だっていうのがなん
+となくあって、そういうものを撮らないといけない気がしていて。だけどなん
+となく垂れ下がる桜の枝にレンズを向けた先にこの絵があって、そこで発見が
+ありこの写真ができたわけです。写真って実験なんだと思います。いろいろ試
+して分かることがある。なんだか悟った気分です。</p>
+
+<p>背景は無駄にcanvasを使って描いています
+(<a href="https://github.com/yukihr/yukihr.github.com/blob/4c8265d8934fa2ee5548a1fb21e12677c3955c1e/source/javascripts/bgcanvas.js">ゆるいソース</a>)
+。HTML5のアレです。無駄と言いましたが、全くの無駄ではなく画像の縁をグラ
+デーションを使って緩やかにフェードしています。デザイナーならPhotoshopを
+使うと思います。けれど腐ってもプログラマです。プログラムでできることは
+プログラムでやるのがプログラマです。・・・まあ、元画像を使いまわせると
+かJSをちょっといじるだけで変化を確認できるとかいいこともあるので。しか
+し、グラデーションを描画するたびにCPUが電力を消費し、地球温暖化につなが
+るので心が痛みます(ページビュー?)。</p>
+
+<p>サイドバーのカテゴリーリンクは、
+<a href="http://tokkonopapa.github.com/blog/2012/01/04/octopress-plugin-for-categories-cloud/">こちら</a>
+の物を使わせていただきました。Thank You!</p>
+
+<p>月曜日ですね。面白い一週間になると良いです。もうこんな時間です。ではで
+は(Dvorak 配列になかなか慣れません)。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[アイコンやDockから起動したEmacsのPATHやexec-pathが正しく設定されてないのをなんとかする]]></title>
+    <link href="http://yukihr.github.com/blog/2012/03/02/emacs-path-settings/"/>
+    <updated>2012-03-02T14:36:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/03/02/emacs-path-settings</id>
+    <content type="html"><![CDATA[<p>ややこしくなるのでこういうことを調べることになった過程は省くんですが、Emacs内部で外部のコマンドへのパスは以下の変数に格納されてるのです。</p>
+
+<!-- more -->
+
+
+<ul>
+<li><p>環境変数 <code>PATH</code></p>
+
+<p>  <code>M-!</code> (shell-command) で起動されるコマンドへのパス。<code>(getenv "PATH")</code>で確認</p></li>
+<li><p>グローバル変数 <code>exec-path</code></p>
+
+<p>  <code>start-process</code> などの関数から起動されるコマンドへのパス</p></li>
+</ul>
+
+
+<p>で、OSXやXfceで確認したんですがデスクトップアイコンなどから起動されたEmacsではこれらが正しく設定されない。ターミナルから<code>emacs</code>と打って起動すればちゃんとシェルのPATHを引き継いで設定されるみたいなんだけれど、GUIのEmacs使っててわざわざターミナルから起動する人は少ないので問題になる。ターミナルで問題なく呼べるコマンドが<code>start-process</code>関数などで呼ぶとファイルが見つからないエラーが出てあるぇー？となったりするわけです。そのせいでflymakeが失敗したり・・・(まあ、それでこういうことを調べたわけなのです)。</p>
+
+<p>で、どうやって解決するかというと、ちょっと強引な方法ですが以下のように~/.emacs.d/init.elなどに書いておく。</p>
+
+<div><script src='https://gist.github.com/1957008.js'></script>
+<noscript><pre><code>(defun exec-shell-command-sync (command &amp;rest args)
+  (let (ret
+         (process
+          (apply 'start-process-shell-command &quot;exec&quot; nil command args)))
+    (set-process-filter
+     process
+     '(lambda (process output)
+        (setq ret (cons output ret))
+        ))
+    (while (not (equalp (process-status process) 'exit))
+      (sleep-for 0 10))
+    (car ret)))
+
+;; When opened from Desktep entry, PATH won't be set to shell's value.
+(let ((path-str
+           (replace-regexp-in-string
+            &quot;\n+$&quot; &quot;&quot; (exec-shell-command-sync &quot;echo&quot; &quot;$PATH&quot;))))
+     (setenv &quot;PATH&quot; path-str)
+     (setq exec-path (nconc (split-string path-str &quot;:&quot;) exec-path)))
+</code></pre></noscript></div>
+
+
+<p>やってるのは<code>echo $PATH</code>を<code>start-process-shell-command</code>で実行して、出力をEmacsの<code>PATH</code>と<code>exec-path</code>に設定するということ。</p>
+
+<p>あと、<a href="http://sakito.jp/emacs/emacsshell.html#path">ここ</a>にあるように設定用elispに直接書いてしまう方法もあるので、個人の環境によってどちらを使うか選べば良いと思う。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[なぜアップルのUIはリアルな素材の模倣なのか]]></title>
+    <link href="http://yukihr.github.com/blog/2012/02/11/why-is-apples-ui-realistic/"/>
+    <updated>2012-02-11T11:31:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/02/11/why-is-apples-ui-realistic</id>
+    <content type="html"><![CDATA[<p>ちょっと前に、<a href="http://togetter.com/li/251604">このTogetterまとめ</a> を読んで考えたこと。</p>
+
+<!-- more -->
+
+
+<h3>OSのGUIの歴史</h3>
+
+<p>現実の物質を模倣したGUIというのがアップルの発明ではない事は念頭に置いておかなくてはならない。OSのGUIの歴史については<a href="http://en.wikipedia.org/wiki/History_of_the_graphical_user_interface">英語版Wikipediaにまさにその項目</a>がある。今でいう一般的なGUIを初めて搭載したのはXerox Altoなんだけれど、<a href="http://images.appleinsider.com/leopard-preview-desktop-3.jpg">そのデスクトップの画像</a>(<a href="http://www.appleinsider.com/articles/07/10/19/road_to_mac_os_x_leopard_dashboard_spotlight_and_the_desktop.html">AppleInsider</a> より)を見ると、今のOSのGUIとほとんど変りないことに驚く。デスクトップに並べられたアイコン、いろいろな場所に開かれたウィンドウ、ゴミ箱・・・。中村さんの言う、「スクリーンの向こうの仮想的な空間」というのはこのXerox AltoのUIにすでに存在しているように思う。S.Jobsがこのアイデアを&#8221;盗んだ&#8221;というのは有名な話だし、JobsによればそうしてつくりだされたMacを真似てWindowsが作られた。今のデスクトップPCのGUIは、いわばこのAltoの直系の子孫だ。そしてその系統樹の頂点にいるのが今のOSXということになる（と思う）。</p>
+
+<p>では、そもそもなぜAltoのGUIは現実の模倣なんだろう、と考えるとそれは「直感的に操作できるから」だろう。GUI登場以前のOSがコマンドを覚えて操作するものであったことを考えると、直感的に操作できる、というのは大きな飛躍だった。アップルのUIがリアルな素材の模倣なのも、その考え方を踏襲しているからだと思う。ボタンのようなUIがあればそれをクリックできる、つまんで動かせるようなUIがあればドラッグアンドドロップで動かせる・・・。</p>
+
+<h3>iOS</h3>
+
+<p>iOSではどうなったか、というと何も変わらなかった。むしろ、マルチタッチによる操作を前提としたOSでは、リアルな素材を模倣したUIはより直感的な操作を可能にした。まるで現実の物がそこにあるようなUI。そういう意味ではiOSはOSXよりもさらに先を行くAltoの子供なのかもしれない。</p>
+
+<h3>質感</h3>
+
+<p>直感的な操作を重視するUIでは本物のような質感が重要になる。滑かなボタン、がたつきのないスクロールやアニメーションなどがストレス無く、直感的に操作できるUIを構成する。そのような考え方を突き詰めて作られたインターフェイスは、中村さんが言うように「てんこ盛り」な重厚なものとなる。</p>
+
+<h3>違和感</h3>
+
+<p>リアルな素材の模倣は直感的な操作を可能にする、とはいえ、使い道を誤ると良くない。悪い例はOSX LionのiCalで、リアルな革素材を贅沢に模倣したUIは「直感的に操作できるUIのためにリアルな素材を用いる」という目的を逸脱しているように思える。ビジュアルデザインとUXデザインを混同した結果、本末転倒になってしまっているのではないか。直感的に操作できるUIという、UX向上の目的でリアルな素材を用いるのは理にかなっているけれど、ビジュアルデザインにまでリアルな素材を持ってくるのに合理的な理由は見つからない。</p>
+
+<p>また、ディティールに細部にまでこだわったリアルなUIは悪い意味でも存在感がある。本来集中すべきコンテンツに集中できにくくなる、ということ。<a href="http://www.ommwriter.com/">OMM WRITER</a> のように没入体験を売りにするソフトウェアの多くでシンプルで平面的なUIが使われているのはそれが理由だと思う。</p>
+
+<h3>ウェブというUIの壮大な実験場</h3>
+
+<p>最初の項目でJobsがXerox AltoからUIを盗んだ、と書いたけどそういう営みは今のウェブでは日常茶飯事だ。昨日、あるウェブサイトで使われたデザインが、今日、他のサイトで使われていたなんていうのはよくある話で、ウェブは今やUIの進化が最も活発に起こっている場所だ。Alto が開発されたとき、UIデザインの最先端はリアルなプロダクトだった。OSXのUIもApple自身のものも含めてリアルなプロダクトから多くを拝借している。でも、今後はOSやアプリのUIがウェブで人気のあるUIを真似ることも増えるんじゃないかと思う。生まれた時からウェブに親しんだ世代は、リアルの模倣を必ずしも直感的だとは思わないだろうし。</p>
+
+<h3>未来</h3>
+
+<p>そのウェブのUIの主流がシンプルでクリーンな平面デザインになってきているというのはGoogleの最近のデザイン変更からも見て取れる。これが一時的なものなのかどうかよく分からないけれど、WindowsのMetro UIが評判なようにこのようななデザインが持つ普遍的な力はあると思う。iOSのGMailアプリはこのデザインをアプリに持ち込んだいい例だろう。で、アップルがそういうデザインに全く無関心かというとそうでもないように思う。Snow LeopardからLionでのUIの変更はその兆しを多く含んでいる（ダイアログのボタンやプログレスバー、スクロールバーはかなりシンプルになった）と思うし、フルスクリーンモードのサポートもシンプルなUIを後押しするんじゃないだろうか。</p>
+
+<p>と、そんなことをつらつらと考えたのです。おしまい。</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Evernote クリエイティブディレクター Gabe 氏によるデザインの話]]></title>
+    <link href="http://yukihr.github.com/blog/2012/02/05/design-talk-by-gabe-campodonico/"/>
+    <updated>2012-02-05T01:50:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/02/05/design-talk-by-gabe-campodonico</id>
+    <content type="html"><![CDATA[<p>個人的に、Evernote のロゴのデザインって秀逸だなーとずっと思っていたん
+だけど、そのデザインを手がけたGabe Campodonico 氏の話が聞けると聞いて、
+先日、 Open Network Lab 主催の
+<a href="http://atnd.org/events/24783">Evernote クリエイティブディレクター Gabe氏によるデザイントーク「シリコンバレー流UI/UX/Brand Development」</a>
+に行ってきたので、そのメモ。</p>
+
+<!-- more -->
+
+
+<p>全体の流れは
+<a href="http://www.andoh.org/2012/02/evernotes-ui-design.html">安藤日記 - Evernote&#8217;s UI Design</a>
+に詳しく書いてくださっている。</p>
+
+<p>Gabe さんは Evernote のロゴを作った人なんだけど、デザイン業界では１５年仕事をしているベテラン。最初は小さなデザイン事務所で Apple や Nike など大手企業のプロダクトデザインを手がけておられたそう。身近な例では Apple Store 銀座も彼の手がけたもの。 Evernote ではロゴのデザインだけではなくUX 全体をみる立場。</p>
+
+<p>彼の仕事について一言では語れないけれど、とても多くの量のインプットを行うことで直感を養うこと、クオリティにこだわらずに多くのアウトプットを客観的に見える形で行った上で良いものをより分ける(Edit)という点が印象に残った。</p>
+
+<p>これはデザインに限らずプログラミングなどのモノづくりにも共通した話かなーと思う。クオリティーにこだわりすぎて結局アウトプットが出せないってよくある罠だし、プロとして仕事をする上では致命的。そういう意味で Gabe さんの仕事のやり方はとても考えさせられる。そういえば、こういう仕事のやり方ってデザインのクラスだと普通に教えられるものなのかな（聞けばよかった）。他にも非常に面白い話題が沢山あったので、後々見返すことになりそうだ。</p>
+
+<h2>From Logo to UI</h2>
+
+<h3>ロゴについて</h3>
+
+<ul>
+<li>Evernote の仕事を始めたとき、この企業が何をしようとしているのか知るために、できるだけ多くのいろいろな社員と話した。</li>
+<li>たくさんの(100個近い)候補を作った。普通の企業のロゴのようなやつから、普通じゃないやつまで。
+
+<ul>
+<li>(スライドで Evernote ロゴの候補一覧を見せてくれた。無限記号(∞)や、多くの書類を模したものなど何種類かのカテゴリがあり、その中でも微妙に異なるバージョンが幾つか。)</li>
+</ul>
+</li>
+<li>たくさんの候補の中から良いものを選ぶ。自分で選んだ後、他の人にレビューしてもらう。</li>
+<li>テック企業のロゴは殆どが青と赤。Evernote のロゴが緑になったのは、緑といえば Evernote と印象を持ってもらうため。</li>
+<li>象のロゴは &#8220;Elephants never forget. （象たちは決して忘れない）&#8221; という英語のことわざから来ている。</li>
+<li>シンプルさは大事だけど、やり過ぎると印象に残らない。
+
+<ul>
+<li>悪い例はTODOリストのアプリ。みんな✔チェックマークをもとにしていて似たり寄ったり。</li>
+<li>印象に残るロゴにすることで、AppStore のトップにフィーチャーされている。</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>パッケージング</h3>
+
+<ul>
+<li>箱を開けたときの感動が大切。商品を大切なモノだと思ってもらう。
+
+<ul>
+<li>お菓子のパッケージや、アクセサリーのパッケージはそういうものが多い。</li>
+<li>この分野では日本は優れていると思う。</li>
+</ul>
+</li>
+</ul>
+
+
+<h3>UIデザイン</h3>
+
+<ul>
+<li>プラットフォームの良き市民となる。プラットフォームの標準的なUIを採用する。
+
+<ul>
+<li>多くの人は、そのプラットフォームに慣れているので、すべてのプラットフォームで同じUIにすることはない。</li>
+<li><code>これは 1Password もそうだなー。それぞれのPFでのベストな体験をユーザーに与えたいってことなんだろう。</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Less is More</h3>
+
+<ul>
+<li>機能を削って何を残すか編集することがチャレンジング!</li>
+<li>よくある落とし穴
+
+<ul>
+<li>機能を選択できるようにオプションにしよう!</li>
+<li>メニュー項目にいれちゃえ!</li>
+<li>この機能があれば競合に勝てる!
+
+<ul>
+<li>製品に欠かせない機能なのかどうか問うことで、機能を絞ろう</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Immersive Experience (没入体験) が得られるようなUIを作る。</li>
+<li>エンジニアは機能を作るのが仕事なのでソフトウェアは複雑になり易い。そこで、UX デザイナーが機能を削って <em>目的にフォーカス</em> させる。
+
+<ul>
+<li><code>これはかなり思い当たる。UX デザイナー重要だと思う。</code></li>
+</ul>
+</li>
+</ul>
+
+
+<h3>Fluid Interface</h3>
+
+<ul>
+<li><code>流れるように変化してユーザーを誘導するUIと理解した。</code></li>
+<li>ポイント
+
+<ul>
+<li>今までに何をして、これから何をしようとしているのかを分かりやすく。</li>
+<li>自分が作ったものがどこにあるのかを分かりやすく。 (e.g. ファイルの場所など</li>
+</ul>
+</li>
+<li>良い例は iPad Photo アプリ、 iPad Twitter アプリ</li>
+</ul>
+
+
+<h3>質疑応答</h3>
+
+<ul>
+<li>ルーティンワークになると創造性が無くなるので、意識して分野を変えて新しいことを学ぶようにしている。</li>
+<li>いい仕事のためには、濃密なディスカッションと最終的に判断する人の存在が重要。</li>
+<li>技術的な判断のために、エンジニアもひとりクリエイティブチームに最初から入る。</li>
+<li>白黒に色を落としても記憶に残るものが印象に残るデザイン。</li>
+<li>UXデザイナー ｘ ビジュアルデザイナー ｘ エンジニアでチームを作るのが問題解決には良い。</li>
+<li>最初はいいアイデアであっても悪いアイデアであっても躊躇せずに数を出しておく。あとで見返したときに、悪いと思っていたものからとても良いアイデアが生まれることがある。
+
+<ul>
+<li>幅広いアイデアを形にして見れるようにしておくことが大切。</li>
+</ul>
+</li>
+<li>iPhone に200近くのアプリが入っている。常にいろんなアプリをチェックしている。Pathの新バージョンや Twittelator が素晴らしい。
+
+<ul>
+<li>幅広く情報を仕入れることが良い直感を育むことを意識している。</li>
+</ul>
+</li>
+</ul>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[ARCHITECTURAL ENVIRONMENT for TOMORROW@MOT]]></title>
+    <link href="http://yukihr.github.com/blog/2012/01/09/architectural-environment-for-tomorrow-at-mot/"/>
+    <updated>2012-01-09T23:09:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/01/09/architectural-environment-for-tomorrow-at-mot</id>
+    <content type="html"><![CDATA[<p><a href="http://www.mot-art-museum.jp/index.html">東京都現代美術館</a> で <a href="http://www.mot-art-museum.jp/exhibition/129/#">ARCHITECTURAL ENVIRONMENT for TOMORROW</a> を見てきた。展覧会では長らく触れていなかった建築の先端的な世界を垣間見ることができ、全体的にとても面白かった。展示の中でも特に印象に残った物をメモしておく。</p>
+
+<!-- more -->
+
+
+<ul>
+<li>SANAA ロレックス・ラーニングセンター/ヴィム・ヴェンダース「もし建築が話せたら」</li>
+</ul>
+
+
+<p>一番印象に残った展示。建築の世界でかなり注目されている建築とのこと。ヴィム・ヴェンダース「もし建築が話せたら」は、このラーニングセンターが語るという手法をとった３D動画のインスタレーション。実際に建築があるのはスイスだが、機会があれば実際に体験してみたいと思う。</p>
+
+<ul>
+<li>フィオナ・タン Cloud Island</li>
+</ul>
+
+
+<p>瀬戸内の島々の人や風景を捉えたビデオ。自然、建築、人を淡々と捉えた作品だけれど、この展覧会で紹介されている建築との親和性が感じられて印象的だった。自然や有機物にヒントを得て、それらと調和するのが新しい世代の建築の特徴のように思った。</p>
+
+<p>以前はそれなりに建築について調べたりしていたけれど、最近はだいぶ遠ざかっていた。この展覧会に行ってとても多くのインスピレーションをもらえたように思う。これからも建築の世界の動向についてはチェックしていきたい。</p>
+
+<p>展覧会は 1/15(日) まで。もう一回行ってもいい。</p>
+]]></content>
+  </entry>
+  
+</feed>

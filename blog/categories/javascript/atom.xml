@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: JavaScript | flowery *]]></title>
+  <link href="http://yukihr.github.com/blog/categories/javascript/atom.xml" rel="self"/>
+  <link href="http://yukihr.github.com/"/>
+  <updated>2013-01-15T20:56:05+09:00</updated>
+  <id>http://yukihr.github.com/</id>
+  <author>
+    <name><![CDATA[yukihr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Smashing Magazine に Douglas Crockford 氏のインタビュー]]></title>
+    <link href="http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine/"/>
+    <updated>2012-05-09T20:26:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine</id>
+    <content type="html"><![CDATA[<p>Web 開発に有益な情報を提供してくれる<a href="http://www.smashingmagazine.com/">Smashing Magazine</a>に、米Yahoo!開発者のDouglas Crockford氏のインタビューが載っています。</p>
+
+<!-- more -->
+
+
+<p><a href="http://coding.smashingmagazine.com/2012/04/27/yahoos-doug-crockford-on-javascript/">How I Work: Yahoo!’s Doug Crockford On JavaScript</a></p>
+
+<p>Douglas Crockford 氏といえば、<a href="http://www.amazon.co.jp/gp/product/4873113911/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=yukihr-22&amp;linkCode=as2&amp;camp=247&amp;creative=1211&amp;creativeASIN=4873113911">JavaScript: The Good Parts</a> の著者であり、JSONの発見者でもあり、JavaScript開発者であれば知らない人はいないというほどの有名開発者ですが、氏がモノづくりをする上での考え方や習慣について語っているようです。</p>
+
+<p>質問内容についていくつか引用してみます。</p>
+
+<ul>
+<li><p>WHY DO YOU FEEL PROGRAMMERS SHOULD STUDY THE HISTORY OF COMPUTER SCIENCE?</p>
+
+<blockquote><p>プログラマがコンピュータ科学の歴史について学ぶべきだと思うのはなぜですか？</p></blockquote></li>
+<li><p>WHAT WERE THE TRAITS OF THE WEAK PROGRAMMERS YOU’VE SEEN OVER YOUR CAREER?</p>
+
+<blockquote><p>あなたが見てきた中で、弱さを持つプログラマの特徴とはなんでしょうか？</p></blockquote></li>
+<li><p>IN <a href="http://www.codersatwork.com/">CODERS AT WORK</a>, YOU STRESS THE IMPORTANCE OF DOING CODE READINGS WITH TEAMS. WHY DO YOU FEEL IT’S IMPORTANT TO PRESENT YOUR CODE IN FRONT OF OTHER PEOPLE?</p>
+
+<blockquote><p><a href="http://www.amazon.co.jp/gp/product/4274068471/ref=as_li_ss_tl?ie=UTF8&amp;tag=yukihr-22&amp;linkCode=as2&amp;camp=247&amp;creative=7399&amp;creativeASIN=4274068471">Coders at Work</a>の中で、チームでコードリーディングすることの重要性について強調していますが、コードを他人に見せるのが重要だと思う理由はなんでしょうか？</p></blockquote></li>
+<li><p>ARE PROGRAMMERS GETTING BETTER AT USER EMPATHY?</p>
+
+<blockquote><p>ユーザーに共感するという点で、プログラマーの考えはよくなっていますか？</p></blockquote></li>
+<li><p>WHAT APPROACHES WOULD YOU SAY A MASTER HAS VERSUS A BEGINNER?</p>
+
+<blockquote><p>名人として、ビギナーと違うアプローチを持つとしたらなんでしょうか？</p></blockquote></li>
+<li><p>WHAT ARE YOUR THOUGHTS ON JQUERY? SOME JS ENTHUSIASTS FEEL LIKE IT’S LETTING PEOPLE OFF THE HOOK FROM TRULY LEARNING JS.</p>
+
+<blockquote><p>jQuery についてどう思いますか？JavaScriptの支持者の中にはjQueryが本来のJSを学ぶことから人々を遠ざけていると考える人もいますが。</p></blockquote></li>
+<li><p>WHEN YOU WERE DEVELOPING JSON WAS IT TOUGH TO PULL BACK AND NOT PUT TOO MUCH INTO IT?</p>
+
+<blockquote><p>JSONを開発する際に、一歩引いて多くを詰め込みすぎないようにするのは大変でしたか？</p></blockquote></li>
+<li><p>HOW DID JSON GET ADOPTED?</p>
+
+<blockquote><p>JSONはどのようにして人々に受け入れられたのでしょうか？</p></blockquote></li>
+</ul>
+
+
+<p>いくつかと言いながらほとんどの質問を引用してしまいましたが、興味深い質問が多いと思いますので興味の有る方はぜひ原文に当たってみてください。
+質問の答えから、人間味あふれるダグ先生の人柄が垣間見えます:-)
+Smashing Magazine では、How I Work というシリーズでこれからウェブ開発者のインタビューを掲載するとの事ですので楽しみです。</p>
+]]></content>
+  </entry>
+  
+</feed>

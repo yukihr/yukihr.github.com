@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Xcode | flowery *]]></title>
+  <link href="http://yukihr.github.com/blog/categories/xcode/atom.xml" rel="self"/>
+  <link href="http://yukihr.github.com/"/>
+  <updated>2013-01-15T20:56:05+09:00</updated>
+  <id>http://yukihr.github.com/</id>
+  <author>
+    <name><![CDATA[yukihr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Emacs + Xcode4.5 iOSアプリ開発設定]]></title>
+    <link href="http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings/"/>
+    <updated>2012-11-01T17:12:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/11/01/emacs-xcode4-dot-5-dev-settings</id>
+    <content type="html"><![CDATA[<p>EmacsとXcode4.5でiOSアプリを開発をするための設定です。ウェブ上にEmacs + Xcodeで開発するための設定は色々とあるんですが、Xcode側の変更によってが動作するものが少なかった(特にFlymakeと補完)のでまとめておきたいと思います。実際の開発作業ではXcodeもEmacsと別に起動しておいて、必要に応じて切り替えて使っています。</p>
+
+<ul>
+<li>obj-c-modeでソースファイルを開く</li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-auto-mode.el'></script>
+<noscript><pre><code>;; Auto mode
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@implementation&quot; . objc-mode))
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@interface&quot; . objc-mode))
+(add-to-list 'magic-mode-alist '(&quot;\\(.\\|\n\\)*\n@protocol&quot; . objc-mode))
+</code></pre></noscript></div>
+</p>
+
+<ul>
+<li>ヘッダと実装ファイルをジャンプする(C-c t)</li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-jump-header.el'></script>
+<noscript><pre><code>;; Jump between header and impl
+(setq ff-other-file-alist
+     '((&quot;\\.mm?$&quot; (&quot;.h&quot;))
+       (&quot;\\.cc$&quot;  (&quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.hh$&quot;  (&quot;.cc&quot; &quot;.C&quot;))
+
+       (&quot;\\.c$&quot;   (&quot;.h&quot;))
+       (&quot;\\.h$&quot;   (&quot;.c&quot; &quot;.cc&quot; &quot;.C&quot; &quot;.CC&quot; &quot;.cxx&quot; &quot;.cpp&quot; &quot;.m&quot; &quot;.mm&quot;))
+
+       (&quot;\\.C$&quot;   (&quot;.H&quot;  &quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.H$&quot;   (&quot;.C&quot;  &quot;.CC&quot;))
+
+       (&quot;\\.CC$&quot;  (&quot;.HH&quot; &quot;.H&quot;  &quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.HH$&quot;  (&quot;.CC&quot;))
+
+       (&quot;\\.cxx$&quot; (&quot;.hh&quot; &quot;.h&quot;))
+       (&quot;\\.cpp$&quot; (&quot;.hpp&quot; &quot;.hh&quot; &quot;.h&quot;))
+
+       (&quot;\\.hpp$&quot; (&quot;.cpp&quot; &quot;.c&quot;))))
+
+(add-hook 'objc-mode-hook
+         (lambda ()
+           (define-key c-mode-base-map (kbd &quot;C-c t&quot;) 'ff-find-other-file)
+         ))
+</code></pre></noscript></div>
+</p>
+
+<ul>
+<li>カーソル下の単語または選択範囲をXcodeのオーガナイザで検索する(C-c r)</li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-search-doc.el'></script>
+<noscript><pre><code>;; Documentation Search
+(defun region-string-or-currnet-word ()
+  &quot;Get region string if region is set, else get current word.&quot;
+  (if mark-active
+      (buffer-substring (region-beginning) (region-end))
+    (current-word)))
+
+(defun xcode:searchdoc ()
+  (interactive)
+  (let ((term (region-string-or-currnet-word)))
+    (do-applescript
+     (format
+      (concat
+       &quot;tell application \&quot;System Events\&quot; \r&quot;
+       &quot;  tell process \&quot;Xcode\&quot; \r&quot;
+                                        ; -- Activate Xcode if necessary
+       &quot;    set frontmost to true \r&quot;
+                                        ;    -- Open the Organizer
+       &quot;    keystroke \&quot;2\&quot; using {shift down, command down} \r&quot;
+       &quot;    set organizer to window 1 \r&quot;
+                                        ;    -- Select the Documentation panel if it's not already selected
+       &quot;    if the title of organizer is not \&quot;Organizer - Documentation\&quot; then \r&quot;
+       &quot;      click button \&quot;Documentation\&quot; of tool bar 1 of organizer \r&quot;
+       &quot;      delay 0.1 \r&quot;
+       &quot;      set organizer to window 1 \r&quot;
+       &quot;    end if \r&quot;
+                                        ;    -- Move focus to the search field
+       &quot;    set searchField to text field 1 of splitter group 1 of organizer \r&quot;
+       &quot;    set searchField's focused to true \r&quot;
+       &quot;    set value of searchField to \&quot;&quot; term &quot;\&quot; \r&quot;
+       &quot;  end tell \r&quot;
+       &quot;end tell \r&quot;
+       )))))
+
+(add-hook 'objc-mode-hook (lambda ()
+  (define-key objc-mode-map (kbd &quot;C-c r&quot;) 'xcode:searchdoc)))
+</code></pre></noscript></div>
+</p>
+
+<ul>
+<li><p>SDKのパス設定</p>
+
+<p>FlymakeとAutocompleteの設定に利用します。</p></li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-sdk-settings.el'></script>
+<noscript><pre><code>;; SDK Place
+(defvar xcode:sdkver &quot;6.0&quot;)
+(defvar xcode:sdkpath &quot;/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer&quot;)
+(defvar xcode:sdk (concat xcode:sdkpath &quot;/SDKs/iPhoneSimulator&quot; xcode:sdkver &quot;.sdk&quot;))
+</code></pre></noscript></div>
+</p>
+
+<ul>
+<li><p>Autocompleteによる補完設定</p>
+
+<p>別途<a href="https://github.com/brianjcj/auto-complete-clang">auto-complete-clang.el</a>をダウンロードし、elispのインストールディレクトリに置いておきます。</p></li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-auto-complete.el'></script>
+<noscript><pre><code>;; auto-complete-mode
+(setq ac-modes (append ac-modes '(objc-mode)))
+(add-to-load-path &quot;vendor/auto-complete-clang&quot;) ;; Set your own Path
+(setq ac-clang-flags (list &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot; &quot;-x&quot; &quot;objective-c&quot; &quot;-std=gnu99&quot; &quot;-isysroot&quot; xcode:sdk &quot;-I.&quot; &quot;-F..&quot; &quot;-fblocks&quot;))
+(require 'auto-complete-clang)
+;; (setq ac-clang-prefix-header &quot;stdafx.pch&quot;)
+;; (setq ac-clang-flags '(&quot;-w&quot; &quot;-ferror-limit&quot; &quot;1&quot;))
+;(setq clang-completion-flags (list &quot;-Wall&quot; &quot;-Wextra&quot; &quot;-fsyntax-only&quot; &quot;-ObjC&quot; &quot;-std=c99&quot; &quot;-isysroot&quot; &quot;/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator6.0.sdk&quot; &quot;-I.&quot; &quot;-F..&quot; &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot;))
+(add-hook 'objc-mode-hook
+          (lambda () (setq ac-sources (append '(ac-source-clang
+                                                ac-source-yasnippet
+                                                ac-source-gtags)
+                                              ac-sources))))
+</code></pre></noscript></div>
+</p>
+
+<p>  三行目の設定をauto-complete-clang.elを置いたパスで置き換えてください。</p>
+
+<ul>
+<li>Flymake</li>
+</ul>
+
+
+<p><div><script src='https://gist.github.com/3991026.js?file=ios-flymake.el'></script>
+<noscript><pre><code>;; flymake エラー表示は参考程度に・・・
+(require 'flymake)
+;(defvar flymake-objc-compiler (concat xcode:sdkpath &quot;/usr/bin/gcc&quot;))
+(defvar flymake-objc-compiler (executable-find &quot;clang&quot;))
+;;(defvar flymake-objc-compile-default-options (list &quot;-Wall&quot; &quot;-Wextra&quot; &quot;-fsyntax-only&quot; &quot;-x&quot; &quot;objective-c&quot; &quot;-std=c99&quot;))
+(defvar flymake-objc-compile-default-options (list &quot;-D__IPHONE_OS_VERSION_MIN_REQUIRED=30200&quot; &quot;-fsyntax-only&quot; &quot;-fno-color-diagnostics&quot; &quot;-fobjc-arc&quot; &quot;-fblocks&quot; &quot;-Wreturn-type&quot; &quot;-Wparentheses&quot; &quot;-Wswitch&quot; &quot;-Wno-unused-parameter&quot; &quot;-Wunused-variable&quot; &quot;-Wunused-value&quot; &quot;-isysroot&quot; xcode:sdk))
+(defvar flymake-last-position nil)
+(defcustom flymake-objc-compile-options '(&quot;-I.&quot;)
+  &quot;Compile option for objc check.&quot;
+  :group 'flymake
+  :type '(repeat (string)))
+
+(defun flymake-objc-init ()
+ (let* ((temp-file (flymake-init-create-temp-buffer-copy
+                    'flymake-create-temp-inplace))
+        (local-file (file-relative-name
+                     temp-file
+                     (file-name-directory buffer-file-name))))
+   (list flymake-objc-compiler (append flymake-objc-compile-default-options flymake-objc-compile-options (list local-file)))))
+
+(setq flymake-err-line-patterns
+      (cons
+       '(&quot;\\(.+\\):\\([0-9]+\\):\\([0-9]+\\): \\(.+\\)&quot; 1 2 3 4)
+       flymake-err-line-patterns))
+
+(defadvice flymake-post-syntax-check (before flymake-force-check-was-interrupted)
+  ;(setq flymake-check-was-interrupted t)
+  ;; dirty hack.... for clang command always exit with status code 1
+  (setq exit-status 0))
+
+(add-hook 'objc-mode-hook
+         (lambda ()
+           (ad-activate 'flymake-post-syntax-check)
+           ;; 拡張子 m と h に対して flymake を有効にする設定 flymake-mode t の前に書く必要があります
+           (push '(&quot;\\.m$&quot; flymake-objc-init) flymake-allowed-file-name-masks)
+           (push '(&quot;\\.h$&quot; flymake-objc-init) flymake-allowed-file-name-masks)
+           (if (and (not (null buffer-file-name)) (file-writable-p buffer-file-name))
+               (flymake-mode t))))
+</code></pre></noscript></div>
+</p>
+
+<p>  26行目からの箇所では、コンパイラのclangがExit Code = 1で終了する（オプションを変更すればExitCode=0で終了させられるかもしれません・・）ことでFlymakeがエラーになってしまうことに対処しています。この設定によってFlymakeがコマンドの異常終了を拾わなくなり、他の言語の設定に影響があるかもしれないので注意してください。</p>
+
+<p>本ページの設定については以下のページを参考にさせていただきました。ありがとうございました！</p>
+
+<ul>
+<li><a href="http://sakito.jp/emacs/emacsobjectivec.html">Emacs で iPhone アプリ開発を快適にするための設定</a></li>
+<li><a href="https://gist.github.com/2500847">Jump to the documentation search field in Xcode 4 using AppleScript.</a></li>
+<li><a href="http://ponpoko1968.hatenablog.com/entry/20101030/1288395400">clangを使ったCのコード補完</a></li>
+<li><a href="http://blog.fenrir-inc.com/us/2012/04/objective-c-in-emacs-check-the-syntax-in-flymake.html">[Objective-C in Emacs] Check the syntax in flymake</a></li>
+<li><a href="http://roupam.github.com/">Emacs for Xcode+ios Development</a></li>
+</ul>
+
+
+<p>でわー！</p>
+]]></content>
+  </entry>
+  
+</feed>

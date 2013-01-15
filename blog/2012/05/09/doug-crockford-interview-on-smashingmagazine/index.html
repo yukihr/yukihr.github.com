@@ -1,0 +1,262 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Smashing Magazine に Douglas Crockford 氏のインタビュー - flowery *</title>
+  <meta name="author" content="yukihr">
+
+  
+  <meta name="description" content="Web 開発に有益な情報を提供してくれるSmashing Magazineに、米Yahoo!開発者のDouglas Crockford氏のインタビューが載っています。 How I Work: Yahoo!’s Doug Crockford On JavaScript Douglas &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lustria' rel='stylesheet' type='text/css'>
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!-- <script src="/javascripts/bgcanvas.js" type="text/javascript"></script> -->
+  <link href="/atom.xml" rel="alternate" title="flowery *" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29651280-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <canvas id="bgcanvas"></canvas>
+  <header role="banner"><hgroup>
+  <h1><a href="/">flowery *</a></h1>
+  
+</hgroup>
+
+</header>
+  <div class="information"><ul class="social icon-font">
+  <li><a href="//twitter.com/yukihr" rel="twitter" title="Twitter">t</a></li>
+  <li><a href="//github.com/yukihr" rel="github" title="Github">n</a></li>
+  <li><a href="/atom.xml" rel="rss" title="RSS">r</a></li>
+</ul>
+</div>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Smashing Magazine に Douglas Crockford 氏のインタビュー</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-09T20:26:00+09:00" pubdate data-updated="true">May 9<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Web 開発に有益な情報を提供してくれる<a href="http://www.smashingmagazine.com/">Smashing Magazine</a>に、米Yahoo!開発者のDouglas Crockford氏のインタビューが載っています。</p>
+
+<!-- more -->
+
+
+<p><a href="http://coding.smashingmagazine.com/2012/04/27/yahoos-doug-crockford-on-javascript/">How I Work: Yahoo!’s Doug Crockford On JavaScript</a></p>
+
+<p>Douglas Crockford 氏といえば、<a href="http://www.amazon.co.jp/gp/product/4873113911/ref=as_li_qf_sp_asin_il_tl?ie=UTF8&amp;tag=yukihr-22&amp;linkCode=as2&amp;camp=247&amp;creative=1211&amp;creativeASIN=4873113911">JavaScript: The Good Parts</a> の著者であり、JSONの発見者でもあり、JavaScript開発者であれば知らない人はいないというほどの有名開発者ですが、氏がモノづくりをする上での考え方や習慣について語っているようです。</p>
+
+<p>質問内容についていくつか引用してみます。</p>
+
+<ul>
+<li><p>WHY DO YOU FEEL PROGRAMMERS SHOULD STUDY THE HISTORY OF COMPUTER SCIENCE?</p>
+
+<blockquote><p>プログラマがコンピュータ科学の歴史について学ぶべきだと思うのはなぜですか？</p></blockquote></li>
+<li><p>WHAT WERE THE TRAITS OF THE WEAK PROGRAMMERS YOU’VE SEEN OVER YOUR CAREER?</p>
+
+<blockquote><p>あなたが見てきた中で、弱さを持つプログラマの特徴とはなんでしょうか？</p></blockquote></li>
+<li><p>IN <a href="http://www.codersatwork.com/">CODERS AT WORK</a>, YOU STRESS THE IMPORTANCE OF DOING CODE READINGS WITH TEAMS. WHY DO YOU FEEL IT’S IMPORTANT TO PRESENT YOUR CODE IN FRONT OF OTHER PEOPLE?</p>
+
+<blockquote><p><a href="http://www.amazon.co.jp/gp/product/4274068471/ref=as_li_ss_tl?ie=UTF8&amp;tag=yukihr-22&amp;linkCode=as2&amp;camp=247&amp;creative=7399&amp;creativeASIN=4274068471">Coders at Work</a>の中で、チームでコードリーディングすることの重要性について強調していますが、コードを他人に見せるのが重要だと思う理由はなんでしょうか？</p></blockquote></li>
+<li><p>ARE PROGRAMMERS GETTING BETTER AT USER EMPATHY?</p>
+
+<blockquote><p>ユーザーに共感するという点で、プログラマーの考えはよくなっていますか？</p></blockquote></li>
+<li><p>WHAT APPROACHES WOULD YOU SAY A MASTER HAS VERSUS A BEGINNER?</p>
+
+<blockquote><p>名人として、ビギナーと違うアプローチを持つとしたらなんでしょうか？</p></blockquote></li>
+<li><p>WHAT ARE YOUR THOUGHTS ON JQUERY? SOME JS ENTHUSIASTS FEEL LIKE IT’S LETTING PEOPLE OFF THE HOOK FROM TRULY LEARNING JS.</p>
+
+<blockquote><p>jQuery についてどう思いますか？JavaScriptの支持者の中にはjQueryが本来のJSを学ぶことから人々を遠ざけていると考える人もいますが。</p></blockquote></li>
+<li><p>WHEN YOU WERE DEVELOPING JSON WAS IT TOUGH TO PULL BACK AND NOT PUT TOO MUCH INTO IT?</p>
+
+<blockquote><p>JSONを開発する際に、一歩引いて多くを詰め込みすぎないようにするのは大変でしたか？</p></blockquote></li>
+<li><p>HOW DID JSON GET ADOPTED?</p>
+
+<blockquote><p>JSONはどのようにして人々に受け入れられたのでしょうか？</p></blockquote></li>
+</ul>
+
+
+<p>いくつかと言いながらほとんどの質問を引用してしまいましたが、興味深い質問が多いと思いますので興味の有る方はぜひ原文に当たってみてください。
+質問の答えから、人間味あふれるダグ先生の人柄が垣間見えます:-)
+Smashing Magazine では、How I Work というシリーズでこれからウェブ開発者のインタビューを掲載するとの事ですので楽しみです。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yukihr</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-05-09T20:26:00+09:00" pubdate data-updated="true">May 9<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/articles/'>Articles</a>, <a class='category' href='/blog/categories/javascript/'>JavaScript</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine/" data-via="" data-counturl="http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/05/06/search-node-reference-on-command-line/" title="Previous Post: Node.js のリファレンスをコマンドラインから検索するツールを作ってみた">&laquo; Node.js のリファレンスをコマンドラインから検索するツールを作ってみた</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/05/12/new-name-and-bgphoto/" title="next Post: ブログ名と写真を変更しました">ブログ名と写真を変更しました &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tags</h1>
+    <span id="tag-cloud"><a href='/blog/categories/app' style='font-size: 107.5%'>App(1)</a> <a href='/blog/categories/apple' style='font-size: 107.5%'>Apple(1)</a> <a href='/blog/categories/articles' style='font-size: 107.5%'>Articles(1)</a> <a href='/blog/categories/design' style='font-size: 115.0%'>Design(2)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>Emacs(8)</a> <a href='/blog/categories/exhibition' style='font-size: 107.5%'>Exhibition(1)</a> <a href='/blog/categories/geek' style='font-size: 107.5%'>Geek(1)</a> <a href='/blog/categories/ios' style='font-size: 107.5%'>iOS(1)</a> <a href='/blog/categories/javascript' style='font-size: 107.5%'>JavaScript(1)</a> <a href='/blog/categories/keyboard' style='font-size: 107.5%'>Keyboard(1)</a> <a href='/blog/categories/mac' style='font-size: 107.5%'>Mac(1)</a> <a href='/blog/categories/misc' style='font-size: 107.5%'>Misc(1)</a> <a href='/blog/categories/node-js' style='font-size: 107.5%'>Node.js(1)</a> <a href='/blog/categories/photo' style='font-size: 107.5%'>Photo(1)</a> <a href='/blog/categories/tip' style='font-size: 107.5%'>Tip(1)</a> <a href='/blog/categories/ui' style='font-size: 107.5%'>UI(1)</a> <a href='/blog/categories/vim' style='font-size: 107.5%'>Vim(1)</a> <a href='/blog/categories/xcode' style='font-size: 107.5%'>Xcode(1)</a> </span>
+</section><section>
+  <h1>Search</h1>
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:yukihr.github.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+</section>
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  
+  <a href="http://twitter.com/yukihr">@yukihr</a>
+  <span class="credit">with <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yukihr';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine/';
+        var disqus_url = 'http://yukihr.github.com/blog/2012/05/09/doug-crockford-interview-on-smashingmagazine/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

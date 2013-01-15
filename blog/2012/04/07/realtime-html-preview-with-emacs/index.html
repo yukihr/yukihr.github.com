@@ -1,0 +1,395 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Warp - EmacsからリアルタイムにHTMLやmarkdownをブラウザプレビュー - flowery *</title>
+  <meta name="author" content="yukihr">
+
+  
+  <meta name="description" content="EmacsでMarkdownやHTMLをリアルタイムでプレビューしながら編集できるWarp
+というのを作ったのでご紹介〜。 Github - yukihr/Warp HTMLはともかくMarkdownなどのHTMLにコンバートできるフォーマットのプレ
+ビューって割と需要がある気がします。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://yukihr.github.com/blog/2012/04/07/realtime-html-preview-with-emacs/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lustria' rel='stylesheet' type='text/css'>
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!-- <script src="/javascripts/bgcanvas.js" type="text/javascript"></script> -->
+  <link href="/atom.xml" rel="alternate" title="flowery *" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29651280-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <canvas id="bgcanvas"></canvas>
+  <header role="banner"><hgroup>
+  <h1><a href="/">flowery *</a></h1>
+  
+</hgroup>
+
+</header>
+  <div class="information"><ul class="social icon-font">
+  <li><a href="//twitter.com/yukihr" rel="twitter" title="Twitter">t</a></li>
+  <li><a href="//github.com/yukihr" rel="github" title="Github">n</a></li>
+  <li><a href="/atom.xml" rel="rss" title="RSS">r</a></li>
+</ul>
+</div>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Warp - EmacsからリアルタイムにHTMLやmarkdownをブラウザプレビュー</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-07T14:26:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>EmacsでMarkdownやHTMLをリアルタイムでプレビューしながら編集できるWarp
+というのを作ったのでご紹介〜。</p>
+
+<!-- more -->
+
+
+<p><a href="https://github.com/yukihr/Warp">Github - yukihr/Warp</a></p>
+
+<p>HTMLはともかくMarkdownなどのHTMLにコンバートできるフォーマットのプレ
+ビューって割と需要がある気がします。今までもウェブベースで動くものとか
+ネイティブアプリでプレビューの機能があるものはあったんですが、Emacsで
+evilを使ってviキーバインドを使っているような<del>変態</del>こだわりの強
+い自分はなかなかそういうものを使う気になれませんでした。やっぱり編集
+作業はEmacsでやりたいんです・・・。</p>
+
+<p>そこで作ったのがこれ、というわけでは実はなくて、発端はウェブアプリの開
+発中にブラウザのリロードがめんどくさいなーと思ったのがきっかけです。で、
+ウェブソケットサーバとクライアントを立ち上げておいてクライアントにサー
+バを通してEmacsからリロード命令を送れば一切ブラウザに触らずにリロードで
+きるんじゃ・・、と思って検証用にコードを書いてたらいつの間にかリアルタ
+イムプレビュー用のマイナーモードになってました！どうしてこ（ｒｙ ・・・
+まあ、オートリロード用のマイナーモードも書いてるんですがこちらのほうが
+需要がありそうだったので。</p>
+
+<p>今のところ、Emacs23.3 と Chrome の最新版で動作を確認してます。</p>
+
+<h2>インストール</h2>
+
+<p>ウェブソケットを通してクライアント（ウェブページ）に命令を送るんですが、
+Emacsで動くウェブソケットサーバを書くのはスキル的にも時間的にも無理ぽな
+ので(そのうち誰かやりそうだけど)Node.jsで動くサーバに中継してもらいます。
+なので、動作にはNode.jsが必要です（0.6.11と0.7.2でしか動作確認できてな
+いですが多分最近のものであれば動くはず）。個人的には
+<a href="https://github.com/isaacs/nave">nave</a>を使ってインストールするのが簡単
+でバージョン管理もできるのでよさげです。</p>
+
+<p>Node.js がインストールできたらWarpのリポジトリをローカルにクローンしま
+す。ファイルをダウンロードして展開でもよいです。以下、/path/to/.. は実
+際のものに置き換えてください。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd /path/to/your/repos
+</span><span class='line'>$ git clone https://github.com/yukihr/Warp.git</span></code></pre></td></tr></table></div></figure>
+
+
+<p>ローカルにファイルを置いたら、npmモジュールであるところのwebsocketをイ
+ンストール。<a href="http://npmjs.org/">npm</a> が必要なのでインストールしておいて
+ください。npmがインストールできたら、package.jsonにインストール設定があ
+るので、以下のようにします。</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ cd warp
+</span><span class='line'>$ npm install</span></code></pre></td></tr></table></div></figure>
+
+
+<p>~/.emacs.d/init.el などの設定ファイルには以下のように書いておきます。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;load-path</span> <span class="s">&quot;/path/to/warp-directory&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nb">require</span> <span class="ss">&#39;warp</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; キーバインドは適当に</span>
+</span><span class='line'><span class="p">(</span><span class="nv">global-set-key</span> <span class="p">(</span><span class="nv">kbd</span> <span class="s">&quot;C-c C-w C-w&quot;</span><span class="p">)</span> <span class="nv">warp-mode</span><span class="p">)</span>
+</span><span class='line'><span class="c1">;; Markdown を変換する場合</span>
+</span><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;warp-format-converter-alist</span>
+</span><span class='line'>             <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;\\.md\\|\\.markdown&quot;</span> <span class="no">t</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span>
+</span><span class='line'>                                         <span class="c1">;; 使っているコマンドを指定</span>
+</span><span class='line'>                                         <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;markdown&quot;</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>以上でインストールはおしまいです。お疲れ様でした〜。</p>
+
+<h2>使い方</h2>
+
+<p>プレビューを見たいバッファで <code>M-x warp-mode</code> （または設定したキーバイン
+ド）、と。これだけ。初期設定で自動的にクライアントが立ち上がってプレ
+ビューが始まります。markdownがインストール済みであれば試しにWarpの
+README.mdを開いて <code>M-x warp-mode</code> してみてください。</p>
+
+<p>デフォルトで warp-mode で使えるコマンドについては以下のようになります。</p>
+
+<ul>
+<li><p>warp-start-server</p>
+
+<p>サーバを起動します (<code>C-c C-w s</code>)</p></li>
+<li><p>warp-stop-server</p>
+
+<p>サーバを停止します (<code>C-c C-w i</code>)</p></li>
+<li><p>warp-open-client</p>
+
+<p>新しくクライアントを開きます (<code>C-c C-w o</code>)</p></li>
+<li><p>warp-send-current-buffer</p>
+
+<p>カレントバッファをコンバートしつつクライアントに転送します (<code>C-c C-w w</code>)</p></li>
+</ul>
+
+
+<h2>設定</h2>
+
+<h3>自動機能を無効に</h3>
+
+<p>初期設定ではWarpは自動でクライアントを立ち上げたりバッファを転送した
+りしてくれるんですが、そこまでやらなくてもいいよって方は以下のように設
+定すると良いかと。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">custom-set-variables</span>
+</span><span class='line'> <span class="o">&#39;</span><span class="p">(</span><span class="nv">warp-auto-start-sending</span> <span class="no">nil</span><span class="p">)</span>      <span class="c1">; 自動転送を無効に</span>
+</span><span class='line'> <span class="o">&#39;</span><span class="p">(</span><span class="nv">warp-auto-open-client</span> <span class="no">nil</span><span class="p">)</span>        <span class="c1">; クライアントの自動起動を無効に</span>
+</span><span class='line'> <span class="o">&#39;</span><span class="p">(</span><span class="nv">warp-auto-start-auto-scroll</span> <span class="no">nil</span><span class="p">))</span> <span class="c1">; 自動スクロールを無効に</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Markdown, HTML 以外のフォーマット</h3>
+
+<p>Warp は原理的にはシェルコマンドを使ってHTMLに変換できるフォーマットであ
+ればすべてのものに対応してます。このあたりの設定についてはflymakeを参考
+にさせてもらいました。例えばtextileをredclothでコンバートするための設定
+は以下のようになります（redclothのインストールが必要です）。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">add-to-list</span> <span class="ss">&#39;warp-format-converter-alist</span>
+</span><span class='line'>             <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;\\.textile&quot;</span> <span class="no">t</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">()</span> <span class="o">&#39;</span><span class="p">(</span><span class="s">&quot;redcloth&quot;</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>※ 自分の環境だと以下の記述がないとエラーがでました。</p>
+
+<figure class='code'> <div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nv">setenv</span> <span class="s">&quot;LC_ALL&quot;</span> <span class="s">&quot;en_US.UTF-8&quot;</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><code>warp-format-converter-alist</code> に設定しているリストが設定情報になります。
+設定情報の各要素は次のようになります。</p>
+
+<ol>
+<li><p>変換を行うファイル名、または正規表現</p></li>
+<li><p>カレントバッファの内容をコマンドの標準入力に送るかどうか。送るなら
+<code>t</code> 、送らないなら <code>nil</code></p></li>
+<li><p>コマンドをリスト形式で返す<em>関数</em>。リストではなくて関数であることに注
+意。関数とすることで一時ファイル名などの設定ができ、より柔軟な設定が可
+能です。</p></li>
+</ol>
+
+
+<h2>というわけで</h2>
+
+<p>Warpの紹介でした。個人的にはElispでまとまった量のコードを書くのは初め
+てだったんですが、いろいろなソースコードを拝見しながら慣れていきました。
+Elisp開発者の方々に多謝です。</p>
+
+<p>あと、ウェブページとエディタがウェブソケットで通信することでいろいろな
+ことができそうだなー、と思いました。ウェブソケットサーバを立てるのも
+Node.jsなら簡単だし。
+<a href="http://e-arrows.sakura.ne.jp/2011/06/connect-to-nodejs-and-chrome-from-emacs.html">swank.js</a>
+とか究極的かもですね。</p>
+
+<p>ではでは、Happy Editing!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yukihr</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-07T14:26:00+09:00" pubdate data-updated="true">Apr 7<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/emacs/'>Emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yukihr.github.com/blog/2012/04/07/realtime-html-preview-with-emacs/" data-via="" data-counturl="http://yukihr.github.com/blog/2012/04/07/realtime-html-preview-with-emacs/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/03/12/new-design/" title="Previous Post: 新しいデザイン">&laquo; 新しいデザイン</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/04/14/emacs-lisp-oop/" title="next Post: Emacs Lisp でオブジェクト指向">Emacs Lisp でオブジェクト指向 &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tags</h1>
+    <span id="tag-cloud"><a href='/blog/categories/app' style='font-size: 107.5%'>App(1)</a> <a href='/blog/categories/apple' style='font-size: 107.5%'>Apple(1)</a> <a href='/blog/categories/articles' style='font-size: 107.5%'>Articles(1)</a> <a href='/blog/categories/design' style='font-size: 115.0%'>Design(2)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>Emacs(8)</a> <a href='/blog/categories/exhibition' style='font-size: 107.5%'>Exhibition(1)</a> <a href='/blog/categories/geek' style='font-size: 107.5%'>Geek(1)</a> <a href='/blog/categories/ios' style='font-size: 107.5%'>iOS(1)</a> <a href='/blog/categories/javascript' style='font-size: 107.5%'>JavaScript(1)</a> <a href='/blog/categories/keyboard' style='font-size: 107.5%'>Keyboard(1)</a> <a href='/blog/categories/mac' style='font-size: 107.5%'>Mac(1)</a> <a href='/blog/categories/misc' style='font-size: 107.5%'>Misc(1)</a> <a href='/blog/categories/node-js' style='font-size: 107.5%'>Node.js(1)</a> <a href='/blog/categories/photo' style='font-size: 107.5%'>Photo(1)</a> <a href='/blog/categories/tip' style='font-size: 107.5%'>Tip(1)</a> <a href='/blog/categories/ui' style='font-size: 107.5%'>UI(1)</a> <a href='/blog/categories/vim' style='font-size: 107.5%'>Vim(1)</a> <a href='/blog/categories/xcode' style='font-size: 107.5%'>Xcode(1)</a> </span>
+</section><section>
+  <h1>Search</h1>
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:yukihr.github.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+</section>
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  
+  <a href="http://twitter.com/yukihr">@yukihr</a>
+  <span class="credit">with <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yukihr';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yukihr.github.com/blog/2012/04/07/realtime-html-preview-with-emacs/';
+        var disqus_url = 'http://yukihr.github.com/blog/2012/04/07/realtime-html-preview-with-emacs/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Emacs のモードラインをいい感じにした - flowery *</title>
+  <meta name="author" content="yukihr">
+
+  
+  <meta name="description" content="Emacs のモードラインをいい感じにしました。こんな感じ。 ちなみにいい感じにする前のモードラインはこんな感じです。 標準のモードラインが良くないってわけじゃないんですけど、3Dのごつごつし
+た感じとか暗号の羅列のようなUIはもうちょっと何とかならないんかなーと思っ
+てたんですが、簡単でしたね。 &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline/">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href='http://fonts.googleapis.com/css?family=Lustria' rel='stylesheet' type='text/css'>
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="/javascripts/ender.js"></script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!-- <script src="/javascripts/bgcanvas.js" type="text/javascript"></script> -->
+  <link href="/atom.xml" rel="alternate" title="flowery *" type="application/atom+xml">
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-29651280-1']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <canvas id="bgcanvas"></canvas>
+  <header role="banner"><hgroup>
+  <h1><a href="/">flowery *</a></h1>
+  
+</hgroup>
+
+</header>
+  <div class="information"><ul class="social icon-font">
+  <li><a href="//twitter.com/yukihr" rel="twitter" title="Twitter">t</a></li>
+  <li><a href="//github.com/yukihr" rel="github" title="Github">n</a></li>
+  <li><a href="/atom.xml" rel="rss" title="RSS">r</a></li>
+</ul>
+</div>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Emacs のモードラインをいい感じにした</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-27T01:02:00+09:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Emacs のモードラインをいい感じにしました。こんな感じ。</p>
+
+<p><img src="/images/emacs_modeline_after.png" alt="新しいモードライン" /></p>
+
+<!-- more -->
+
+
+<p>ちなみにいい感じにする前のモードラインはこんな感じです。</p>
+
+<p><img src="/images/emacs_modeline_before.png" alt="前のモードライン" /></p>
+
+<p>標準のモードラインが良くないってわけじゃないんですけど、3Dのごつごつし
+た感じとか暗号の羅列のようなUIはもうちょっと何とかならないんかなーと思っ
+てたんですが、簡単でしたね。<strong>自分でカスタマイズすればいい</strong>んですよ。
+さすがはEmacs様でしてそこはカスタマイズのためのインターフェイス（？）をちゃ
+んと用意してくれているのですよ。しかもかなり柔軟に見た目を制御できるん
+ですな！でもまあ、このカスタムの仕方がなかなか難しいんですよね。でー、
+ググッていたらよさそうなカスタマイズをハケーンして、それを参考（という
+かほとんどコピぺ）させてもらったという次第です。</p>
+
+<p>こちらのサイト様を参考にさせていただきました m(_ _)m</p>
+
+<p><a href="http://amitp.blogspot.jp/2011/08/emacs-custom-mode-line.html">Emacs: custom mode line - From Amit’s Thoughts</a></p>
+
+<p>このサイトの設定の何がいいかというと、それは</p>
+
+<ul>
+<li>編集を邪魔しない存在感</li>
+<li>必要最低限の情報。でも、出すべきものはちゃんと出している</li>
+<li>重要な情報はちゃんと視認性がよくなっている</li>
+</ul>
+
+
+<p>そんな的を射た設定に大変感銘を受けたのであります。</p>
+
+<p>しかし、まあ日本人としとは文字コード表示が削られているのとか抵抗があるので、諸々調整しました。
+以下のような部分です。</p>
+
+<ul>
+<li>文字コードなどの情報（後々もっと見やすくしたいなー。 &#8220;utf-8&#8221; とかちゃんと全部表示したい）</li>
+<li>nyan-mode はいいや・・</li>
+<li>行数の表示は 現在の行/全体の行 のフォーマットで</li>
+<li>evil のモードインジケータも表示したいな</li>
+<li>あとはフォントサイズや色を自分好みに</li>
+</ul>
+
+
+<p>・・・ってことで。</p>
+
+<p><a href="https://github.com/yukihr/dotfiles/blob/master/.emacs.d/inits/07_modeline.el">設定部分のソースはココ</a></p>
+
+<p>正直 Vim の powerline がかっこ良くて羨ましくて Vim に乗り換えるか・・
+(<a href="http://www.emacswiki.org/emacs/PowerLine">Emacsでもpowerline</a>あるみたいなんですけど、自環境でうまく動かず・・)とか思ってたんですがここまで出来れば私はもう満足です。</p>
+
+<p>（追記
+後々カスタム方法をまとめたポストも書きたいと思っています（自分用メモでもある＞＜）。</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">yukihr</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2012-04-27T01:02:00+09:00" pubdate data-updated="true">Apr 27<span>th</span>, 2012</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/emacs/'>Emacs</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="http://twitter.com/share" class="twitter-share-button" data-url="http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline/" data-via="" data-counturl="http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2012/04/14/emacs-lisp-oop/" title="Previous Post: Emacs Lisp でオブジェクト指向">&laquo; Emacs Lisp でオブジェクト指向</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2012/05/06/search-node-reference-on-command-line/" title="next Post: Node.js のリファレンスをコマンドラインから検索するツールを作ってみた">Node.js のリファレンスをコマンドラインから検索するツールを作ってみた &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Tags</h1>
+    <span id="tag-cloud"><a href='/blog/categories/app' style='font-size: 107.5%'>App(1)</a> <a href='/blog/categories/apple' style='font-size: 107.5%'>Apple(1)</a> <a href='/blog/categories/articles' style='font-size: 107.5%'>Articles(1)</a> <a href='/blog/categories/design' style='font-size: 115.0%'>Design(2)</a> <a href='/blog/categories/emacs' style='font-size: 160.0%'>Emacs(8)</a> <a href='/blog/categories/exhibition' style='font-size: 107.5%'>Exhibition(1)</a> <a href='/blog/categories/geek' style='font-size: 107.5%'>Geek(1)</a> <a href='/blog/categories/ios' style='font-size: 107.5%'>iOS(1)</a> <a href='/blog/categories/javascript' style='font-size: 107.5%'>JavaScript(1)</a> <a href='/blog/categories/keyboard' style='font-size: 107.5%'>Keyboard(1)</a> <a href='/blog/categories/mac' style='font-size: 107.5%'>Mac(1)</a> <a href='/blog/categories/misc' style='font-size: 107.5%'>Misc(1)</a> <a href='/blog/categories/node-js' style='font-size: 107.5%'>Node.js(1)</a> <a href='/blog/categories/photo' style='font-size: 107.5%'>Photo(1)</a> <a href='/blog/categories/tip' style='font-size: 107.5%'>Tip(1)</a> <a href='/blog/categories/ui' style='font-size: 107.5%'>UI(1)</a> <a href='/blog/categories/vim' style='font-size: 107.5%'>Vim(1)</a> <a href='/blog/categories/xcode' style='font-size: 107.5%'>Xcode(1)</a> </span>
+</section><section>
+  <h1>Search</h1>
+  <form action="http://google.com/search" method="get">
+    <fieldset role="search">
+      <input type="hidden" name="q" value="site:yukihr.github.com" />
+      <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+    </fieldset>
+  </form>
+</section>
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  
+  <a href="http://twitter.com/yukihr">@yukihr</a>
+  <span class="credit">with <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'yukihr';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline/';
+        var disqus_url = 'http://yukihr.github.com/blog/2012/04/27/neat-emacs-modeline/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

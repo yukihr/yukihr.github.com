@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: UI | flowery *]]></title>
+  <link href="http://yukihr.github.com/blog/categories/ui/atom.xml" rel="self"/>
+  <link href="http://yukihr.github.com/"/>
+  <updated>2013-01-15T20:56:05+09:00</updated>
+  <id>http://yukihr.github.com/</id>
+  <author>
+    <name><![CDATA[yukihr]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[なぜアップルのUIはリアルな素材の模倣なのか]]></title>
+    <link href="http://yukihr.github.com/blog/2012/02/11/why-is-apples-ui-realistic/"/>
+    <updated>2012-02-11T11:31:00+09:00</updated>
+    <id>http://yukihr.github.com/blog/2012/02/11/why-is-apples-ui-realistic</id>
+    <content type="html"><![CDATA[<p>ちょっと前に、<a href="http://togetter.com/li/251604">このTogetterまとめ</a> を読んで考えたこと。</p>
+
+<!-- more -->
+
+
+<h3>OSのGUIの歴史</h3>
+
+<p>現実の物質を模倣したGUIというのがアップルの発明ではない事は念頭に置いておかなくてはならない。OSのGUIの歴史については<a href="http://en.wikipedia.org/wiki/History_of_the_graphical_user_interface">英語版Wikipediaにまさにその項目</a>がある。今でいう一般的なGUIを初めて搭載したのはXerox Altoなんだけれど、<a href="http://images.appleinsider.com/leopard-preview-desktop-3.jpg">そのデスクトップの画像</a>(<a href="http://www.appleinsider.com/articles/07/10/19/road_to_mac_os_x_leopard_dashboard_spotlight_and_the_desktop.html">AppleInsider</a> より)を見ると、今のOSのGUIとほとんど変りないことに驚く。デスクトップに並べられたアイコン、いろいろな場所に開かれたウィンドウ、ゴミ箱・・・。中村さんの言う、「スクリーンの向こうの仮想的な空間」というのはこのXerox AltoのUIにすでに存在しているように思う。S.Jobsがこのアイデアを"盗んだ"というのは有名な話だし、JobsによればそうしてつくりだされたMacを真似てWindowsが作られた。今のデスクトップPCのGUIは、いわばこのAltoの直系の子孫だ。そしてその系統樹の頂点にいるのが今のOSXということになる（と思う）。</p>
+
+<p>では、そもそもなぜAltoのGUIは現実の模倣なんだろう、と考えるとそれは「直感的に操作できるから」だろう。GUI登場以前のOSがコマンドを覚えて操作するものであったことを考えると、直感的に操作できる、というのは大きな飛躍だった。アップルのUIがリアルな素材の模倣なのも、その考え方を踏襲しているからだと思う。ボタンのようなUIがあればそれをクリックできる、つまんで動かせるようなUIがあればドラッグアンドドロップで動かせる・・・。</p>
+
+<h3>iOS</h3>
+
+<p>iOSではどうなったか、というと何も変わらなかった。むしろ、マルチタッチによる操作を前提としたOSでは、リアルな素材を模倣したUIはより直感的な操作を可能にした。まるで現実の物がそこにあるようなUI。そういう意味ではiOSはOSXよりもさらに先を行くAltoの子供なのかもしれない。</p>
+
+<h3>質感</h3>
+
+<p>直感的な操作を重視するUIでは本物のような質感が重要になる。滑かなボタン、がたつきのないスクロールやアニメーションなどがストレス無く、直感的に操作できるUIを構成する。そのような考え方を突き詰めて作られたインターフェイスは、中村さんが言うように「てんこ盛り」な重厚なものとなる。</p>
+
+<h3>違和感</h3>
+
+<p>リアルな素材の模倣は直感的な操作を可能にする、とはいえ、使い道を誤ると良くない。悪い例はOSX LionのiCalで、リアルな革素材を贅沢に模倣したUIは「直感的に操作できるUIのためにリアルな素材を用いる」という目的を逸脱しているように思える。ビジュアルデザインとUXデザインを混同した結果、本末転倒になってしまっているのではないか。直感的に操作できるUIという、UX向上の目的でリアルな素材を用いるのは理にかなっているけれど、ビジュアルデザインにまでリアルな素材を持ってくるのに合理的な理由は見つからない。</p>
+
+<p>また、ディティールに細部にまでこだわったリアルなUIは悪い意味でも存在感がある。本来集中すべきコンテンツに集中できにくくなる、ということ。<a href="http://www.ommwriter.com/">OMM WRITER</a> のように没入体験を売りにするソフトウェアの多くでシンプルで平面的なUIが使われているのはそれが理由だと思う。</p>
+
+<h3>ウェブというUIの壮大な実験場</h3>
+
+<p>最初の項目でJobsがXerox AltoからUIを盗んだ、と書いたけどそういう営みは今のウェブでは日常茶飯事だ。昨日、あるウェブサイトで使われたデザインが、今日、他のサイトで使われていたなんていうのはよくある話で、ウェブは今やUIの進化が最も活発に起こっている場所だ。Alto が開発されたとき、UIデザインの最先端はリアルなプロダクトだった。OSXのUIもApple自身のものも含めてリアルなプロダクトから多くを拝借している。でも、今後はOSやアプリのUIがウェブで人気のあるUIを真似ることも増えるんじゃないかと思う。生まれた時からウェブに親しんだ世代は、リアルの模倣を必ずしも直感的だとは思わないだろうし。</p>
+
+<h3>未来</h3>
+
+<p>そのウェブのUIの主流がシンプルでクリーンな平面デザインになってきているというのはGoogleの最近のデザイン変更からも見て取れる。これが一時的なものなのかどうかよく分からないけれど、WindowsのMetro UIが評判なようにこのようななデザインが持つ普遍的な力はあると思う。iOSのGMailアプリはこのデザインをアプリに持ち込んだいい例だろう。で、アップルがそういうデザインに全く無関心かというとそうでもないように思う。Snow LeopardからLionでのUIの変更はその兆しを多く含んでいる（ダイアログのボタンやプログレスバー、スクロールバーはかなりシンプルになった）と思うし、フルスクリーンモードのサポートもシンプルなUIを後押しするんじゃないだろうか。</p>
+
+<p>と、そんなことをつらつらと考えたのです。おしまい。</p>
+]]></content>
+  </entry>
+  
+</feed>
